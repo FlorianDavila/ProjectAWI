@@ -1,76 +1,113 @@
-    <!--NAV BAR-->
-   <div>   
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">TopChef</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Acceuil</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Fiches</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Stock</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
-
       <!-- CATEGORIES -->
-      <div class="d-flex flex-row cats" style="height: 400px;">
-        <ul class="nav nav-pills nav-fill flex-column col-3">
-            <li class="nav-item cat">
-              <a class="nav-link bg-secondary text-white" aria-current="page" href="#">Viandes</a>
+      <div class="row cats">
+        <div id="list" class="col-3">
+          <ul class="nav nav-pills nav-fill flex-column">
+            <li class="nav-item ing2">
+              <a class="nav-link bg-secondary text-white" aria-current="page" href="#v">Viandes</a>
             </li>
-            <li class="nav-item cat">
-              <a class="nav-link bg-secondary text-white" href="#">Fruits</a>
+            <li class="nav-item ing2">
+              <a class="nav-link bg-secondary text-white" href="#f">Fruits</a>
             </li>
-            <li class="nav-item cat">
-              <a class="nav-link bg-secondary text-white" href="#">Légumes</a>
+            <li class="nav-item ing2">
+              <a class="nav-link bg-secondary text-white" href="#l">Légumes</a>
             </li>
-            <li class="nav-item cat">
-                <a class="nav-link bg-secondary text-white" aria-current="page" href="#">Céréales</a>
+            <li class="nav-item ing2">
+                <a class="nav-link bg-secondary text-white" aria-current="page" href="#c">Céréales</a>
             </li>
           </ul>
-          <div class="text col-5">
-              <div class="row">
-                <h4>Viandes et volailles</h4>
-                <div class="but">
+        </div>
+          <div data-bs-spy="scroll" data-bs-target="#list" data-bs-offset="0" class="scrollspy-example div text col-5" tabindex="0">
+              <div class="row div">
+                <h4 id="v">Viandes et volailles</h4>
+                <div class="float">
                     <button type="submit" class="btn-secondary btn-sm">Modifier qtés</button>
                 </div>
               </div>
-              <div class="ing">
+              <div>
                 <form class="row ing2">
-                    <label for="staticEmail2" class="visually-hidden col">Poulet</label>
+                    <label for="a" class="visually-hidden col">Poulet</label>
                     <input type="text" readonly class="form-control-sm col" id="a" value="80">
-                    <label for="staticEmail2" class="visually-hidden col">Kg</label>
+                    <label for="aa" class="visually-hidden col">Kg</label>
                 </form>
                 <form class="row ing2">
-                    <label for="staticEmail2" class="visully-hidden col">Steak</label>
-                    <input type="text" readonly class="form-control-sm col" id="aa" value="90">
-                    <label for="staticEmail2" class="visually-hidden col">g</label>
+                    <label for="aaa" class="visully-hidden col">Steak</label>
+                    <input type="text" readonly class="form-control-sm col" id="aaa" value="90">
+                    <label for="aaaa" class="visually-hidden col">g</label>
                 </form>
+              </div>
+              <div class="ing2">
+                <div class="row div">
+                  <h4 id="f">Fruits</h4>
+                  <div class="float">
+                      <button type="submit" class="btn-secondary btn-sm">Modifier qtés</button>
+                  </div>
+                </div>
+                <div>
+                  <form class="row ing2">
+                      <label for="a" class="visually-hidden col">Pomme</label>
+                      <input type="text" readonly class="form-control-sm col" id="a" value="80">
+                      <label for="aa" class="visually-hidden col">Kg</label>
+                  </form>
+                  <form class="row ing2">
+                      <label for="aaa" class="visully-hidden col">Poire</label>
+                      <input type="text" readonly class="form-control-sm col" id="aaa" value="90">
+                      <label for="aaaa" class="visually-hidden col">g</label>
+                  </form>
+                </div>
+              </div>
+              <div class="ing2">
+                <div class="row div">
+                  <h4 id="l">Légumes</h4>
+                  <div class="float">
+                      <button type="submit" class="btn-secondary btn-sm">Modifier qtés</button>
+                  </div>
+                </div>
+                <div>
+                  <form class="row ing2">
+                      <label for="a" class="visually-hidden col">Courette</label>
+                      <input type="text" readonly class="form-control-sm col" id="a" value="80">
+                      <label for="aa" class="visually-hidden col">Kg</label>
+                  </form>
+                  <form class="row ing2">
+                      <label for="aaa" class="visully-hidden col">Haricot</label>
+                      <input type="text" readonly class="form-control-sm col" id="aaa" value="90">
+                      <label for="aaaa" class="visually-hidden col">g</label>
+                  </form>
+                </div>
+              </div>
+              <div class="ing2">
+                <div class="row div">
+                  <h4 id="c">Céréales</h4>
+                  <div class="float">
+                      <button type="submit" class="btn-secondary btn-sm">Modifier qtés</button>
+                  </div>
+                </div>
+                <div>
+                  <form class="row ing2">
+                      <label for="a" class="visually-hidden col">Blé</label>
+                      <input type="text" readonly class="form-control-sm col" id="a" value="80">
+                      <label for="aa" class="visually-hidden col">Kg</label>
+                  </form>
+                  <form class="row ing2">
+                      <label for="aaa" class="visully-hidden col">Soja</label>
+                      <input type="text" readonly class="form-control-sm col" id="aaa" value="90">
+                      <label for="aaaa" class="visually-hidden col">g</label>
+                  </form>
+                </div>
               </div>
           </div>
           <div class="col-3 vente">
             <h4>Déclarer une vente</h4>
-            <div class="ing3">
+            <div class="ing2">
                 <select class="form-select col">
                     <option selected>Creme chibouste</option>
                     <option value="1">Steak frites</option>
                 </select>
                 <form class="row ing2">
-                    <label for="staticEmail2" class="visually-hidden col">Qté vendue</label>
-                    <input type="text" class="form-control-sm col" id="aaa">
+                    <label for="aaaaa" class="col">Qté vendue</label>
+                    <input type="text" class="form-control-sm col" id="aaaaa">
                 </form>
-                <div class="ing3">
+                <div class="ing2">
                     <button type="button" class="btn-sm btn-secondary">Confirmer la vente</button>
                 </div>
             </div>
