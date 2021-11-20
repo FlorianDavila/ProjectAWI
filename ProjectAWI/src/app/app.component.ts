@@ -1,12 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
-import {
-  NgbCarousel,
-  NgbSlideEvent,
-  NgbSlideEventSource,
-} from '@ng-bootstrap/ng-bootstrap';
-
+import { Component } from '@angular/core'; 
 @Component({
-  selector: 'my-app',
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 }) 
