@@ -1,0 +1,66 @@
+<div class="container">
+    <form class="" [formGroup]="infoForm">
+      <div
+        style="display:flex; flex-direction: row; justify-content: center; align-items: center"
+      >
+        <div class="marge">
+          <label for="name">Intitulé</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            formControlName="name"
+          />
+        </div>
+        <div class="marge">
+          <label for="nbGuests">Nb. couverts</label>
+          <input
+            type="text"
+            id="nbGuests"
+            class="form-control"
+            formControlName="nbGuests"
+          />
+        </div>
+        <div class="marge">
+          <label for="manager">Responsable</label>
+          <input
+            type="text"
+            id="manager"
+            class="form-control"
+            formControlName="manager"
+          />
+        </div>
+      </div>
+    </form>
+    <hr/>
+    <div id="container">
+      <div id="left" class="section">
+        <label style="width:100%;">Ingrédients</label>
+        <div #parent></div>
+        <label [className]="displayErrorMessageI ? 'error' : 'invisible'"><i><small>Veuillez sélectionner un ingrédient et renseigner sa quantité avant d'ajouter un nouvel ingrédient</small></i></label>
+        <button
+          class="btn btn-outline-dark"
+          type="button"
+          (click)="addIngredientForm()"
+        >
+          Ajouter
+        </button>
+      </div>
+      <div id="right" class="section">
+        <label style="width:100%;">Etapes</label>
+        <textarea #stageHTML [(ngModel)]="myTextArea" class="full"></textarea>
+        <label [className]="displayErrorMessageTA ? 'error' : 'invisible'"><i><small>Veuillez renseigner le contenu de l'étape</small></i></label>
+        <button
+          style="margin-top:10px;"
+          class="btn btn-outline-dark r"
+          type="submit"
+          (click)="OnValidateStage(stageHTML.value)"
+        >
+          Valider l'étape
+        </button>
+      </div>
+    </div>
+    <hr/>
+    <div #resume></div> 
+  </div>
+  
