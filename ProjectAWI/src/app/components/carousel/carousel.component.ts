@@ -21,7 +21,8 @@ export class CarouselComponent {
   pauseOnHover = true;
   pauseOnFocus = true;
 
-  @ViewChild('carousel', { static: true }) carousel: NgbCarousel;
+  @ViewChild('carousel', { static: true })
+  carousel!: NgbCarousel;
 
   togglePaused() {
     if (this.paused) {

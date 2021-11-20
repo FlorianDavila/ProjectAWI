@@ -16,11 +16,12 @@ export class FicheComponent {
   nbStages = 1;
   myTextArea=""; 
 
-  @ViewChild('parent', { read: ViewContainerRef }) target: ViewContainerRef;
-  private componentRef: ComponentRef<any>;
+  @ViewChild('parent', { read: ViewContainerRef })
+  target!: ViewContainerRef;
+  private componentRef!: ComponentRef<any>;
 
-  @ViewChild('resume', { read: ViewContainerRef }) targetResume: ViewContainerRef;
-  private componentRefResume: ComponentRef<any>;
+  @ViewChild('resume', { read: ViewContainerRef }) targetResume!: ViewContainerRef;
+  private componentRefResume!: ComponentRef<any>;
 
   constructor(private formBuilder: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) {
     this.infoForm = this.formBuilder.group({
