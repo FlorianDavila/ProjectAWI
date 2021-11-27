@@ -1,7 +1,6 @@
 <app-navbar></app-navbar>
 <search-bar></search-bar> 
 <app-carousel></app-carousel>
-<div *ngFor="let ing of ingredients | async">
-    <label>{{ing.name}}</label> 
-    <label>{{ing.category.name}}</label>
+<div *ngFor="let ing of ingredientService.ingredients | async">
+    <span>{{ing.name}} {{ing.category.name}}</span>  
 </div> 

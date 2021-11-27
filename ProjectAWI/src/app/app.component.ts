@@ -8,10 +8,9 @@ import { IngredientService } from './services/ingredient.service';
   styleUrls: ['./app.component.css']
 }) 
 export class AppComponent {
-  ingredients: Observable<Ingredient[]> = new Observable<Ingredient[]>();
-  constructor(public ingrdientsService: IngredientService) {}
+  constructor(public ingredientService: IngredientService) {}
 
   ngOnInit(): void {
-    this.ingredients = this.ingrdientsService.getIngredients();
+    this.ingredientService.ingredients = this.ingredientService.getIngredients();
   }
 }

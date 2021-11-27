@@ -1,4 +1,4 @@
-export class IngredientCategory {
+export class MealCategory {
     id: string;
     name: string;
 
@@ -7,3 +7,4 @@ export class IngredientCategory {
         this.name = name;
     }
 }
+

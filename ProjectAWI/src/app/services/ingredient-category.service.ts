@@ -9,8 +9,7 @@ import { IngredientCategory } from '../models/IngredientCategory';
 })
 export class IngredientCategoryService { 
 
-  // public festivals: Observable<Festival[]> = new Observable<Festival[]>();
-  // public fets:Festival[] = [];
+  ingredientCategories: Observable<IngredientCategory[]> = new Observable<IngredientCategory[]>(); 
   private path = '/Ingredient_Categories/';
   private projetawiStore: AngularFirestore;
   private ingredientCategoriesCollection: AngularFirestoreCollection<IngredientCategory>;
@@ -22,14 +21,18 @@ export class IngredientCategoryService {
  
   getIngredientCategory(path: any): Observable<IngredientCategory> { 
     var itemDoc = this.projetawiStore.doc<IngredientCategory>(path);
-    return itemDoc.valueChanges()
-    .pipe(
-    map( ing => this.jsonToIngredientCategory(ing) )
-    );
+    // return itemDoc.valueChanges()
+    // .pipe(
+    // map( ing => this.jsonToIngredientCategory(ing) )
+    // );
+    return itemDoc.get().pipe(
+      map( ing => this.jsonToIngredientCategory(ing) )
+      );
   }
 
   jsonToIngredientCategory(json: any) : IngredientCategory {
     return new IngredientCategory(
+      json.id,
       json.name
     )
   }

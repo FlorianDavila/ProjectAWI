@@ -28,7 +28,7 @@ import { AngularFireModule } from '@angular/fire/compat';
     AngularFirestoreModule],
   declarations: [AppComponent, SearchBarComponent, FicheComponent, IngredientFormComponent, ResumeComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent],
   exports: [AppComponent, SearchBarComponent, FicheComponent],
-  bootstrap: [AppComponent, SearchBarComponent, FicheComponent],
+  bootstrap: [AppComponent, SearchBarComponent],
   entryComponents: [IngredientFormComponent],
   providers: [IngredientService]
 })

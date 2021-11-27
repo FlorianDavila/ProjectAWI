@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs'; 
+import { Observable, Subject } from 'rxjs'; 
 import { map } from 'rxjs/operators'; 
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';  
 import { Ingredient } from '../models/Ingredient';
@@ -10,10 +10,7 @@ import { IngredientCategory } from '../models/IngredientCategory';
   providedIn: 'root'
 })
 export class IngredientService {
-
-  // public festivals: Observable<Festival[]> = new Observable<Festival[]>();
-  
-  private ic: IngredientCategory = new IngredientCategory("az");
+  ingredients: Observable<Ingredient[]> = new Observable<Ingredient[]>(); 
   private path = '/Ingredients/';
   private projetawiStore: AngularFirestore;
   private ingredientsCollection: AngularFirestoreCollection<Ingredient>;
@@ -33,13 +30,20 @@ export class IngredientService {
   }
 
   jsonToIngredient(json: any) : Ingredient { 
-    this.ingredientCategoryService.getIngredientCategory(json.ingredient_category).subscribe(data => this.ic = data); //path to ingredient category
-    console.log(this.ic.name)
+    var ic!: IngredientCategory; 
+    
+
+    if (json.ingredient_category) { 
+      var itemDoc = this.projetawiStore.doc<IngredientCategory>(json.ingredient_category);
+      //itemDoc.get().then(res => {}); //path to ingredient category  
+    }
+
+    console.log(ic);
     return new Ingredient(
       json.id,
       json.name,
       json.isAllergern,
-      this.ic,
+      ic,
       json.price,
       json.unit
     )
