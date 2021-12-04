@@ -1,6 +1,2 @@
 <app-navbar></app-navbar>
-<search-bar></search-bar> 
-<app-carousel></app-carousel>
-<div *ngFor="let ing of ingredientService.ingredients | async">
-    <span>{{ing.name}} {{ing.category.name}}</span>  
-</div> 
+<router-outlet></router-outlet>

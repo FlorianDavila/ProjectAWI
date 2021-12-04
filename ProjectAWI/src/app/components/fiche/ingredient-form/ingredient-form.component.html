@@ -7,13 +7,12 @@
         placeholder="Ex. 1.5"
       />
       <div class="input-group-append">
-        <label
-          style="width:45px;"
-          #lbl
+        <label 
+        style="width: 50px;"
           id="lbl"
           class="input-group-text"
           for="inputGroupSelect01"
-          >?</label
+          >{{selectedFood.unit}}</label
         >
         <select
           style="border-bottom-left-radius:0px;border-top-left-radius:0px;"
@@ -28,7 +27,7 @@
             *ngFor="let food of foods; first as isFirst"
             [disabled]="isFirst"
           >
-            {{ food.viewValue }}
+            {{ food.name }}
           </option>
         </select>
       </div>

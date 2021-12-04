@@ -1,4 +1,4 @@
-<div class="container">
+<div style="margin-top: 40px;" class="container">
     <form class="" [formGroup]="infoForm">
       <div
         style="display:flex; flex-direction: row; justify-content: center; align-items: center"
@@ -39,15 +39,26 @@
         <div #parent></div>
         <label [className]="displayErrorMessageI ? 'error' : 'invisible'"><i><small>Veuillez sélectionner un ingrédient et renseigner sa quantité avant d'ajouter un nouvel ingrédient</small></i></label>
         <button
-          class="btn btn-outline-dark"
+          class="btn btn-outline-dark" style="margin-top: 10px;"
           type="button"
           (click)="addIngredientForm()"
         >
           Ajouter
         </button>
       </div>
-      <div id="right" class="section">
+      <div id="right" class="section"> 
         <label style="width:100%;">Etapes</label>
+        <div style="margin-top: 10px;">
+          <label for="name">Nom</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            formControlName="name"
+          />
+          <label [className]="displayErrorMessageI ? 'error' : 'invisible'"><i><small>Veuillez renseigner le nom de l'étape</small></i></label>
+        </div>
+        <label style="margin-top: 10px;">Description</label>
         <textarea #stageHTML [(ngModel)]="myTextArea" class="full"></textarea>
         <label [className]="displayErrorMessageTA ? 'error' : 'invisible'"><i><small>Veuillez renseigner le contenu de l'étape</small></i></label>
         <button
@@ -61,6 +72,31 @@
       </div>
     </div>
     <hr/>
-    <div #resume></div> 
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let stage of this.listStages; let index = index" cdkDrag> 
+        <div id="containerResume">
+          <div id="leftResume" class="sectionResume" class="fullResume"> 
+            <div *ngIf="!isIngredientDictEmpty(stage.ingredientDict); else noIngredients" class="sectionResume">
+                <p *ngFor="let ingredient of stage.ingredientDict | keyvalue">{{ingredient.value}} {{ingredient.key}}<br></p> 
+            </div>
+            <ng-template #noIngredients>
+              <div class="sectionResume">
+                <label><i>Aucun ingrédient n'est nécessaire</i></label> 
+              </div>
+            </ng-template>
+          </div>
+          <div id="rightResume" class="sectionResume" class="fullResume"> 
+            <div id="containerStages">
+              <div id="leftResume" class="sectionResume"> 
+                <label class="fullResume">{{index + 1}}</label> 
+              </div>
+              <div id="rightResume" class="sectionResume">
+                <div class="fullResume" [innerHTML]="stage.description"></div> 
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div> 
   </div>
   

@@ -21,14 +21,29 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { IngredientService } from './services/ingredient.service';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
+import { RouterModule, Routes } from '@angular/router';
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
+const appRoutes: Routes = [
+  { path: 'fiches', component: FicheComponent },
+  { path: 'stock', component: StockComponent },
+  { path: 'acceuil', component: HomepageComponent },
+  { path: '', component: HomepageComponent }
+];
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, NgbModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule],
-  declarations: [AppComponent, SearchBarComponent, FicheComponent, IngredientFormComponent, ResumeComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent],
+    AngularFirestoreModule,
+    RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
+    DragDropModule
+  ],
+  declarations: [AppComponent, SearchBarComponent, HomepageComponent, FicheComponent, IngredientFormComponent, ResumeComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent],
   exports: [AppComponent, SearchBarComponent, FicheComponent],
-  bootstrap: [AppComponent, SearchBarComponent],
+  bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],
   providers: [IngredientService]
 })

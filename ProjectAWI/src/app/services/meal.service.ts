@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'; 
-import { Meal } from '../models/Meal';
-import { MealCategoryService } from './meal-category.service';
+import { Meal } from '../models/Meal'; 
 import { StageService } from './stage.service';
 
 @Injectable({
@@ -15,14 +14,12 @@ export class MealService {
   private path = '/Meal/';
   private projetawiStore: AngularFirestore;
   private mealsCollection: AngularFirestoreCollection<Meal>;
-  private stageService: StageService;
-  private mealCategoriesService: MealCategoryService;
+  private stageService: StageService; 
 
-  constructor(private db: AngularFirestore, stageService: StageService, mealCategoriesService: MealCategoryService) {
+  constructor(private db: AngularFirestore, stageService: StageService) {
     this.projetawiStore = db;
     this.mealsCollection = db.collection(this.path);
-    this.stageService = stageService;
-    this.mealCategoriesService = mealCategoriesService;
+    this.stageService = stageService; 
   } 
 
   getMeals(): Observable<Meal[]> {

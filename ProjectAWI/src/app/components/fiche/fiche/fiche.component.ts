@@ -1,7 +1,8 @@
 import { Component, ComponentFactoryResolver, ComponentRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms'; 
-import { IngredientFormComponent } from '../ingredient-form/ingredient-form.component';
-import { ResumeComponent } from '../resume/resume.component';
+import { Stage } from 'src/app/models/Stage';
+import { IngredientFormComponent } from '../ingredient-form/ingredient-form.component'; 
+import {CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'fiche',
@@ -11,17 +12,16 @@ import { ResumeComponent } from '../resume/resume.component';
 export class FicheComponent { 
   displayErrorMessageI = false;
   displayErrorMessageTA = false;
+  displayErrorMessageNoName = false;
   infoForm: FormGroup;
-  listIngredients = new Array<ComponentRef<IngredientFormComponent>>();  
-  nbStages = 1;
-  myTextArea=""; 
+  listIngredientsForm = new Array<ComponentRef<IngredientFormComponent>>();  
+  listStages:  Array<Stage>;  
+  myTextArea="";  
+  myInputArea=""; 
 
   @ViewChild('parent', { read: ViewContainerRef })
   target!: ViewContainerRef;
   private componentRef!: ComponentRef<any>;
-
-  @ViewChild('resume', { read: ViewContainerRef }) targetResume!: ViewContainerRef;
-  private componentRefResume!: ComponentRef<any>;
 
   constructor(private formBuilder: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) {
     this.infoForm = this.formBuilder.group({
@@ -32,6 +32,7 @@ export class FicheComponent {
   }
   
   ngOnInit(): void { 
+    this.listStages = new Array<Stage>();
   }
 
   onSubmitForm(): void {
@@ -43,45 +44,62 @@ export class FicheComponent {
   }
 
   addIngredientForm(): void { 
-    if (this.listIngredients.length == 0)
+    if (this.listIngredientsForm.length == 0)
       this.add();
     else {
-      const ing = this.listIngredients[this.listIngredients.length - 1].instance;
-      if (ing.ingredientInput != undefined && ing.quantityInput != undefined) { 
+      const ing = this.listIngredientsForm[this.listIngredientsForm.length - 1].instance;
+      if (ing.selectedFood != undefined && ing.quantityInput != undefined) { 
         this.add();
         this.displayErrorMessageI = false;
       } 
       else
         this.displayErrorMessageI = true;
     }
+    
+    console.log(this.listStages)
   } 
 
   private add(): void { 
     const childComponent = this.componentFactoryResolver.resolveComponentFactory(IngredientFormComponent); 
     this.componentRef = this.target.createComponent(childComponent); 
-    this.listIngredients.push(this.componentRef);  
+    this.listIngredientsForm.push(this.componentRef);  
   }
 
   OnValidateStage(stageHTML: string) {  
+    if (this.myInputArea == "") {
+      this.displayErrorMessageNoName = true;
+      return;
+    }
     if (this.myTextArea == "") { 
       this.displayErrorMessageTA = true;
       return;
-    }
-
-    const childComponent = this.componentFactoryResolver.resolveComponentFactory(ResumeComponent); 
-    this.componentRefResume = this.targetResume.createComponent(childComponent);  
+    } 
     
-    var ingredients = "";
-    this.listIngredients.forEach(element => {
-      ingredients += element.instance.quantityInput + " " + element.instance.ingredientInput.viewValue + "\n"; 
+    var ingredients: { [ingredientId: string]: number; } = {};
+    this.listIngredientsForm.forEach(element => {
+      if (element.instance.quantityInput && element.instance.selectedFood) { 
+        if (element.instance.selectedFood.id) (ingredients as any)[element.instance.selectedFood.id] = element.instance.quantityInput;  
+      }
     }); 
-    this.componentRefResume.instance.innerHtmlIngredients = ingredients;
-    this.componentRefResume.instance.innerHtmlStage = stageHTML;
-    this.componentRefResume.instance.i = this.nbStages.toString();
-    this.nbStages++;
+
+    var stage = new Stage("", "Stage x", ingredients, stageHTML.replace('\n','<br\>'), 60)
+    this.listStages.push(stage); 
 
     this.target.clear();
     this.myTextArea = "";
+    this.myInputArea = "";
     this.displayErrorMessageTA = false;
+    this.displayErrorMessageI = false;
+    this.displayErrorMessageNoName = false;
+
+    this.listIngredientsForm = []; 
   }
-} 
+
+  isIngredientDictEmpty(ingredientDict: { [ingredientId: string]: number; }) { 
+    return Object.keys(ingredientDict).length === 0;
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.listStages, event.previousIndex, event.currentIndex);
+  }
+}  
