@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Stage } from 'src/app/models/Stage';
 import { IngredientFormComponent } from '../ingredient-form/ingredient-form.component'; 
 import {CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Ingredient } from 'src/app/models/Ingredient';
 
 @Component({
   selector: 'fiche',
@@ -10,14 +11,14 @@ import {CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./fiche.component.css']
 })
 export class FicheComponent { 
+  displayStageList = false;
   displayErrorMessageI = false;
   displayErrorMessageTA = false;
   displayErrorMessageNoName = false;
   infoForm: FormGroup;
   listIngredientsForm = new Array<ComponentRef<IngredientFormComponent>>();  
-  listStages:  Array<Stage>;  
-  myTextArea="";  
-  myInputArea=""; 
+  listStages:  Array<Stage>;   
+  stageForm: FormGroup; 
 
   @ViewChild('parent', { read: ViewContainerRef })
   target!: ViewContainerRef;
@@ -27,7 +28,12 @@ export class FicheComponent {
     this.infoForm = this.formBuilder.group({
       name: '',
       nbGuests: '',
-      manager: '',
+      manager: ''
+    });
+    this.stageForm = this.formBuilder.group({
+      stageName: '',
+      stageBody: '',
+      stageDuration: ''
     });
   }
   
@@ -65,29 +71,32 @@ export class FicheComponent {
     this.listIngredientsForm.push(this.componentRef);  
   }
 
-  OnValidateStage(stageHTML: string) {  
-    if (this.myInputArea == "") {
-      this.displayErrorMessageNoName = true;
-      return;
-    }
-    if (this.myTextArea == "") { 
-      this.displayErrorMessageTA = true;
-      return;
-    } 
-    
-    var ingredients: { [ingredientId: string]: number; } = {};
+  OnValidateStage() {    
+    const formValue = this.stageForm.value;
+    var name = formValue['stageName'];
+    var body = formValue['stageBody'];
+    var duration = formValue['stageDuration'];
+    if (!this.checkFields(name, body)) return;
+
+    var ingredients: [Ingredient, string][] = []; 
     this.listIngredientsForm.forEach(element => {
       if (element.instance.quantityInput && element.instance.selectedFood) { 
-        if (element.instance.selectedFood.id) (ingredients as any)[element.instance.selectedFood.id] = element.instance.quantityInput;  
+        console.log("azerty")
+        if (element.instance.selectedFood.name) {
+          ingredients.push([element.instance.selectedFood, element.instance.quantityInput]);  
+          console.log("azerty2")
+        } 
       }
-    }); 
+    });  
 
-    var stage = new Stage("", "Stage x", ingredients, stageHTML.replace('\n','<br\>'), 60)
+    duration = duration ? ' (' + duration + ')' : '';
+    var stage = new Stage("", '<b>' + name + '<b\>' + '<br\>', ingredients, body.replace('\n','<br\>') + duration, 60);
     this.listStages.push(stage); 
 
     this.target.clear();
-    this.myTextArea = "";
-    this.myInputArea = "";
+    this.stageForm.patchValue({ stageName: '', stageBody: '' });
+
+    if (!this.displayStageList) this.displayStageList = true;
     this.displayErrorMessageTA = false;
     this.displayErrorMessageI = false;
     this.displayErrorMessageNoName = false;
@@ -95,9 +104,17 @@ export class FicheComponent {
     this.listIngredientsForm = []; 
   }
 
-  isIngredientDictEmpty(ingredientDict: { [ingredientId: string]: number; }) { 
-    return Object.keys(ingredientDict).length === 0;
-  }
+  checkFields(name: string, body: string) : boolean{
+    if (name == "" || name == null || name == undefined) {
+      this.displayErrorMessageNoName = true;
+      return false;
+    }
+    if (body == "" || body == null || body == undefined) { 
+      this.displayErrorMessageTA = true;
+      return false;
+    } 
+    return true;
+  } 
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.listStages, event.previousIndex, event.currentIndex);

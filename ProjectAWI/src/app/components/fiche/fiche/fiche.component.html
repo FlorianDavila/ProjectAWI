@@ -1,102 +1,101 @@
 <div style="margin-top: 40px;" class="container">
-    <form class="" [formGroup]="infoForm">
-      <div
-        style="display:flex; flex-direction: row; justify-content: center; align-items: center"
-      >
-        <div class="marge">
-          <label for="name">Intitulé</label>
-          <input
-            type="text"
-            id="name"
-            class="form-control"
-            formControlName="name"
-          />
-        </div>
-        <div class="marge">
-          <label for="nbGuests">Nb. couverts</label>
-          <input
-            type="text"
-            id="nbGuests"
-            class="form-control"
-            formControlName="nbGuests"
-          />
-        </div>
-        <div class="marge">
-          <label for="manager">Responsable</label>
-          <input
-            type="text"
-            id="manager"
-            class="form-control"
-            formControlName="manager"
-          />
-        </div>
+  <form class="" [formGroup]="infoForm">
+    <div
+      style="display:flex; flex-direction: row; justify-content: center; align-items: center"
+    >
+      <div class="marge">
+        <label for="name">Intitulé</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="name"
+          autocomplete="off"
+        />
       </div>
-    </form>
-    <hr/>
-    <div id="container">
-      <div id="left" class="section">
-        <label style="width:100%;">Ingrédients</label>
-        <div #parent></div>
-        <label [className]="displayErrorMessageI ? 'error' : 'invisible'"><i><small>Veuillez sélectionner un ingrédient et renseigner sa quantité avant d'ajouter un nouvel ingrédient</small></i></label>
-        <button
-          class="btn btn-outline-dark" style="margin-top: 10px;"
-          type="button"
-          (click)="addIngredientForm()"
-        >
-          Ajouter
-        </button>
+      <div class="marge">
+        <label for="nbGuests">Nb. couverts</label>
+        <input
+          type="text"
+          id="nbGuests"
+          class="form-control"
+          formControlName="nbGuests"
+          autocomplete="off"
+        />
       </div>
-      <div id="right" class="section"> 
-        <label style="width:100%;">Etapes</label>
-        <div style="margin-top: 10px;">
-          <label for="name">Nom</label>
-          <input
-            type="text"
-            id="name"
-            class="form-control"
-            formControlName="name"
-          />
-          <label [className]="displayErrorMessageI ? 'error' : 'invisible'"><i><small>Veuillez renseigner le nom de l'étape</small></i></label>
-        </div>
-        <label style="margin-top: 10px;">Description</label>
-        <textarea #stageHTML [(ngModel)]="myTextArea" class="full"></textarea>
-        <label [className]="displayErrorMessageTA ? 'error' : 'invisible'"><i><small>Veuillez renseigner le contenu de l'étape</small></i></label>
-        <button
-          style="margin-top:10px;"
-          class="btn btn-outline-dark r"
-          type="submit"
-          (click)="OnValidateStage(stageHTML.value)"
-        >
-          Valider l'étape
-        </button>
+      <div class="marge">
+        <label for="manager">Responsable</label>
+        <input
+          type="text"
+          id="manager"
+          class="form-control"
+          formControlName="manager"
+          autocomplete="off"
+        />
       </div>
     </div>
-    <hr/>
-    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-      <div class="example-box" *ngFor="let stage of this.listStages; let index = index" cdkDrag> 
-        <div id="containerResume">
-          <div id="leftResume" class="sectionResume" class="fullResume"> 
-            <div *ngIf="!isIngredientDictEmpty(stage.ingredientDict); else noIngredients" class="sectionResume">
-                <p *ngFor="let ingredient of stage.ingredientDict | keyvalue">{{ingredient.value}} {{ingredient.key}}<br></p> 
-            </div>
-            <ng-template #noIngredients>
-              <div class="sectionResume">
-                <label><i>Aucun ingrédient n'est nécessaire</i></label> 
-              </div>
-            </ng-template>
-          </div>
-          <div id="rightResume" class="sectionResume" class="fullResume"> 
-            <div id="containerStages">
-              <div id="leftResume" class="sectionResume"> 
-                <label class="fullResume">{{index + 1}}</label> 
-              </div>
-              <div id="rightResume" class="sectionResume">
-                <div class="fullResume" [innerHTML]="stage.description"></div> 
-              </div>
-            </div>
-          </div>
+  </form>
+  <hr/>
+  <div id="container">
+    <div id="left" class="section">
+      <label style="width:100%;">Ingrédients</label>
+      <div #parent></div>
+      <label [className]="displayErrorMessageI ? 'error' : 'invisible'"><i><small>Veuillez sélectionner un ingrédient et renseigner sa quantité avant d'ajouter un nouvel ingrédient</small></i></label>
+      <button
+        class="btn btn-outline-dark" style="margin-top: 10px;"
+        type="button"
+        (click)="addIngredientForm()"
+      >
+        Ajouter
+      </button>
+    </div>
+    <div id="right" class="section">   
+      <form [formGroup]="stageForm" (ngSubmit)="OnValidateStage()">
+        <div>
+          <label for="stageName">Nom de l'étape *</label>
+          <input class="form-control mr-sm-2" id="stageName" type="text" placeholder="Préparation de la crème" formControlName="stageName" autocomplete="off"/> 
+          <label [className]="displayErrorMessageNoName ? 'error' : 'invisible'"><i><small>Veuillez renseigner le nom de l'étape</small></i></label>
         </div> 
-      </div>
-    </div> 
+        <div>
+          <label for="stageBody" style="margin-top: 10px;">Description *</label>
+          <textarea style="border-color: #ced4da; border-radius: 5px; padding: 8px 10px 8px; font-size: medium;" placeholder="Dans un récipient..." id="stageBody" formControlName="stageBody" class="full"></textarea>
+          <label [className]="displayErrorMessageTA ? 'error' : 'invisible'"><i><small>Veuillez renseigner le contenu de l'étape</small></i></label>
+        </div>
+        <div>
+          <label for="stageDuration" style="margin-top: 2px;">Durée</label>
+          <input class="form-control mr-sm-2" id="stageDuration" type="text" placeholder="60 minutes" formControlName="stageDuration" autocomplete="off"/>  
+        </div>  
+        <button style="margin-top:15px;" class="btn btn-outline-dark r" type="submit">Valider l'étape</button>
+      </form>
+    </div>  
   </div>
-  
+  <hr/>
+  <div cdkDropList class="example-list" *ngIf="displayStageList" (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let stage of this.listStages; let index = index" cdkDrag> 
+      <div class="containerResume">
+        <div class="leftResume sectionResume fullResume"> 
+          <div *ngIf="stage.ingredients.length; else noIngredients" class="sectionResume">
+            <p *ngFor="let ingredient of stage.ingredients">{{ingredient[1]}} {{ingredient[0].unit}} {{ingredient[0].name}}<br></p> 
+          </div>
+          <ng-template #noIngredients>
+            <div class="sectionResume">
+              <label><i>Aucun ingrédient n'est nécessaire</i></label> 
+            </div>
+          </ng-template>
+        </div>
+        <div class="rightResume sectionResume fullResume"> 
+          <div class="containerStages">
+            <div class="leftResume sectionResume"> 
+              <label class="fullResume">{{index + 1}}</label> 
+            </div>
+            <div class="rightResume sectionResume">
+              <div class="fullResume" [innerHTML]="stage.name"></div> 
+              <div class="fullResume" style="margin-top: 8px;" [innerHTML]="stage.description"></div> 
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div> 
+  <div style="height: 20px;"></div>
+</div>
