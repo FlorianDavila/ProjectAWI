@@ -72,6 +72,11 @@ export class FicheComponent {
   }
 
   OnValidateStage() {    
+    if (!this.displayStageList) this.displayStageList = true;
+    this.displayErrorMessageTA = false;
+    this.displayErrorMessageI = false;
+    this.displayErrorMessageNoName = false;
+
     const formValue = this.stageForm.value;
     var name = formValue['stageName'];
     var body = formValue['stageBody'];
@@ -90,16 +95,11 @@ export class FicheComponent {
     });  
 
     duration = duration ? ' (' + duration + ')' : '';
-    var stage = new Stage("", '<b>' + name + '<b\>' + '<br\>', ingredients, body.replace('\n','<br\>') + duration, 60);
+    var stage = new Stage("", '<b>' + name + '<b\>' + '<br\>', ingredients, body.replace('\n','<br\>').substring(0, body.length-1) + duration, 60);
     this.listStages.push(stage); 
 
     this.target.clear();
-    this.stageForm.patchValue({ stageName: '', stageBody: '' });
-
-    if (!this.displayStageList) this.displayStageList = true;
-    this.displayErrorMessageTA = false;
-    this.displayErrorMessageI = false;
-    this.displayErrorMessageNoName = false;
+    this.stageForm.patchValue({ stageName: '', stageBody: '', stageDuration: '' });
 
     this.listIngredientsForm = []; 
   }

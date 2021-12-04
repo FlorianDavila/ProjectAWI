@@ -74,8 +74,10 @@
     <div class="example-box" *ngFor="let stage of this.listStages; let index = index" cdkDrag> 
       <div class="containerResume">
         <div class="leftResume sectionResume fullResume"> 
-          <div *ngIf="stage.ingredients.length; else noIngredients" class="sectionResume">
-            <p *ngFor="let ingredient of stage.ingredients">{{ingredient[1]}} {{ingredient[0].unit}} {{ingredient[0].name}}<br></p> 
+          <div *ngIf="stage.ingredients.length; else noIngredients" class="sectionResume"> 
+            <ul *ngFor="let ingredient of stage.ingredients">
+              <li>{{ingredient[1]}} {{ingredient[0].unit}} {{ingredient[0].name}}</li> 
+            </ul> 
           </div>
           <ng-template #noIngredients>
             <div class="sectionResume">
@@ -86,7 +88,7 @@
         <div class="rightResume sectionResume fullResume"> 
           <div class="containerStages">
             <div class="leftResume sectionResume"> 
-              <label class="fullResume">{{index + 1}}</label> 
+              <label class="fullResume" style="font-size: x-large;">{{index + 1}}</label> 
             </div>
             <div class="rightResume sectionResume">
               <div class="fullResume" [innerHTML]="stage.name"></div> 
