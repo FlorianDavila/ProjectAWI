@@ -8,8 +8,8 @@ import { Ingredient } from '../models/Ingredient';
   providedIn: 'root'
 })
 export class IngredientService {
-  ingredients: Observable<Ingredient[]> = new Observable<Ingredient[]>(); 
-  private path = '/Ingredients/';
+  ingredients: Observable<Ingredient[]>; 
+  private path = '/Ingredients';
   private projetawiStore: AngularFirestore;
   private ingredientsCollection: AngularFirestoreCollection<Ingredient>; 
 
@@ -18,8 +18,8 @@ export class IngredientService {
     this.ingredientsCollection = db.collection(this.path); 
   } 
  
-  getIngredients(): Observable<Ingredient[]> {
-    return this.ingredientsCollection
+  getIngredients() {
+    this.ingredients = this.ingredientsCollection
     .valueChanges({ idField: "id" }).pipe(
     map(data => data.map(doc => this.jsonToIngredient(doc))) 
     ); 

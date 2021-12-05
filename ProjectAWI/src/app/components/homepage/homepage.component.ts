@@ -6,10 +6,5 @@ import { IngredientService } from 'src/app/services/ingredient.service';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css']
 })
-export class HomepageComponent implements OnInit { 
-  constructor(public ingredientService: IngredientService) {}
-
-  ngOnInit(): void {
-    this.ingredientService.ingredients = this.ingredientService.getIngredients();
-  } 
+export class HomepageComponent {  
 }

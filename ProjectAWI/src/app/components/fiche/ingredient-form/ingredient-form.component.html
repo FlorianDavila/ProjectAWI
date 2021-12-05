@@ -8,29 +8,20 @@
       />
       <div class="input-group-append">
         <label 
-        style="width: 50px;"
+          style="width: 50px;"
           id="lbl"
           class="input-group-text"
           for="inputGroupSelect01"
-          >{{selectedFood.unit}}</label
-        >
+          >{{selectedIng.unit}}
+        </label>  
         <select
           style="border-bottom-left-radius:0px;border-top-left-radius:0px;"
           class="custom-select input-group-append"
           id="inputGroupSelect01"
-          [ngModel]="selectedFood"
-          (ngModelChange)="onChange($event)"
-          name="sel2"
-        >
-          <option
-            [ngValue]="food"
-            *ngFor="let food of foods; first as isFirst"
-            [disabled]="isFirst"
-          >
-            {{ food.name }}
-          </option>
-        </select>
+          [ngModel]="selectedIng"
+          (ngModelChange)="onChange($event)" value="ingre"> 
+          <option [ngValue]="ingredient" *ngFor="let ingredient of ingredients; first as isFirst" [disabled]="isFirst">{{ ingredient.name }}</option>
+        </select> 
       </div>
     </div>
-  </div>
-  
+  </div> 

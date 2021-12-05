@@ -6,7 +6,6 @@ import { FicheComponent } from './components/fiche/fiche/fiche.component';
 import { IngredientFormComponent } from './components/fiche/ingredient-form/ingredient-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { ResumeComponent } from './components/fiche/resume/resume.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ModifcouvComponent } from './components/modifcouv/modifcouv.component';
@@ -25,6 +24,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
@@ -39,9 +40,12 @@ const appRoutes: Routes = [
     AngularFirestoreModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
-    DragDropModule
+    DragDropModule,
+    MatInputModule,
+    MatSelectModule,
+    BrowserAnimationsModule
   ],
-  declarations: [AppComponent, SearchBarComponent, HomepageComponent, FicheComponent, IngredientFormComponent, ResumeComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent],
+  declarations: [AppComponent, SearchBarComponent, HomepageComponent, FicheComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent],
   exports: [AppComponent, SearchBarComponent, FicheComponent],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],

@@ -54,7 +54,7 @@ export class FicheComponent {
       this.add();
     else {
       const ing = this.listIngredientsForm[this.listIngredientsForm.length - 1].instance;
-      if (ing.selectedFood != undefined && ing.quantityInput != undefined) { 
+      if (ing.selectedIng.name != "Ingrédients..." && ing.quantityInput != undefined) { 
         this.add();
         this.displayErrorMessageI = false;
       } 
@@ -85,10 +85,10 @@ export class FicheComponent {
 
     var ingredients: [Ingredient, string][] = []; 
     this.listIngredientsForm.forEach(element => {
-      if (element.instance.quantityInput && element.instance.selectedFood) { 
+      if (element.instance.quantityInput && element.instance.selectedIng) { 
         console.log("azerty")
-        if (element.instance.selectedFood.name) {
-          ingredients.push([element.instance.selectedFood, element.instance.quantityInput]);  
+        if (element.instance.selectedIng.name) {
+          ingredients.push([element.instance.selectedIng, element.instance.quantityInput]);  
           console.log("azerty2")
         } 
       }
