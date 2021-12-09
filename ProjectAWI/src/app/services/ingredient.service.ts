@@ -15,7 +15,8 @@ export class IngredientService {
 
   constructor(private db: AngularFirestore) {
     this.projetawiStore = db;
-    this.ingredientsCollection = db.collection(this.path); 
+    this.ingredientsCollection = db.collection(this.path, ref => ref.orderBy("name", "asc"));
+    this.getIngredients();
   } 
  
   getIngredients() {

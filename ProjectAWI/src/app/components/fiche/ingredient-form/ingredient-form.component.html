@@ -8,7 +8,7 @@
       />
       <div class="input-group-append">
         <label 
-          style="width: 50px;"
+          style="width: 50px; justify-content: center;"
           id="lbl"
           class="input-group-text"
           for="inputGroupSelect01"
@@ -20,7 +20,7 @@
           id="inputGroupSelect01"
           [ngModel]="selectedIng"
           (ngModelChange)="onChange($event)" value="ingre"> 
-          <option [ngValue]="ingredient" *ngFor="let ingredient of ingredients; first as isFirst" [disabled]="isFirst">{{ ingredient.name }}</option>
+          <option [ngValue]="ingredient" *ngFor="let ingredient of ingredients | async ; first as isFirst" [disabled]="isFirst">{{ ingredient.name }}</option>
         </select> 
       </div>
     </div>

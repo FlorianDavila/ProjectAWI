@@ -12,8 +12,8 @@ import { IngredientService } from 'src/app/services/ingredient.service';
 export class IngredientFormComponent implements OnInit {   
   quantityInput: string; 
   defaultOption: Ingredient = { id: 'ing', name: 'Ingrédients...',  unit: 'u.',isAllergern: false, category: "ic", price: 0, allergenCategory: null }
-  ingredients: Ingredient[] = [this.defaultOption];
-  //ingredients: Observable<Ingredient[]>;
+  //ingredients: Ingredient[] = [this.defaultOption];
+  ingredients: Observable<Ingredient[]>;
   selectedIng = this.defaultOption; 
 
   public constructor (public ingredientService: IngredientService) {}
@@ -27,15 +27,15 @@ export class IngredientFormComponent implements OnInit {
   }
 
   initIngredients() {
-    this.ingredients.push(
-      { id: 'steak-0', name: 'Steak', unit: 'L', isAllergern: false, category: "ic", price: 0, allergenCategory: null },
-      { id: 'pizza-1', name: 'Pizza', unit: 'kg', isAllergern: false, category: "ic", price: 0, allergenCategory: null },
-      { id: 'tacos-2', name: 'Tacos', unit: 'L', isAllergern: false, category: "ic", price: 0, allergenCategory: null },
-    );
-    // this.ingredients = this.ingredientService.ingredients;
-    // this.ingredients.pipe(tap(ings => {
-    //   ings.unshift(this.defaultOption);
-    // }));  
+    // this.ingredients.push(
+    //   { id: 'steak-0', name: 'Steak', unit: 'L', isAllergern: false, category: "ic", price: 0, allergenCategory: null },
+    //   { id: 'pizza-1', name: 'Pizza', unit: 'kg', isAllergern: false, category: "ic", price: 0, allergenCategory: null },
+    //   { id: 'tacos-2', name: 'Tacos', unit: 'L', isAllergern: false, category: "ic", price: 0, allergenCategory: null },
+    // );
+    this.ingredients = this.ingredientService.ingredients;
+    this.ingredients.pipe(tap(ings => {
+      ings.unshift(this.defaultOption);
+    }));  
   }
 
   onChange(val: Ingredient) {  

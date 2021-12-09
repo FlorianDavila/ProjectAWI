@@ -143,3 +143,8 @@
   text-overflow: ellipsis;
   word-break: break-word;
 }
+
+.example-boundary {
+  width: 100%;
+  height: 100%;  
+}
