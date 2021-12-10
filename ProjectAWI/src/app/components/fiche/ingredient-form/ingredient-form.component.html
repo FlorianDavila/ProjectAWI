@@ -1,27 +1,13 @@
-<div style="display:flex; flex-direction: row; margin-bottom:10px;">
-    <div class="input-group">
-      <input 
-        (keyup)="onKey($event)"
-        class="form-control input-group-prepend"
-        aria-label="Amount (to the nearest dollar)"
-        placeholder="Ex. 1.5"
-      />
-      <div class="input-group-append">
-        <label 
-          style="width: 50px; justify-content: center;"
-          id="lbl"
-          class="input-group-text"
-          for="inputGroupSelect01"
-          >{{selectedIng.unit}}
-        </label>  
-        <select
-          style="border-bottom-left-radius:0px;border-top-left-radius:0px;"
-          class="custom-select input-group-append"
-          id="inputGroupSelect01"
-          [ngModel]="selectedIng"
-          (ngModelChange)="onChange($event)" value="ingre"> 
-          <option [ngValue]="ingredient" *ngFor="let ingredient of ingredients | async ; first as isFirst" [disabled]="isFirst">{{ ingredient.name }}</option>
-        </select> 
-      </div>
-    </div>
-  </div> 
+<div>
+  <mat-form-field appearance="fill" style="width: 38%; margin-right: 4%;"> 
+    <mat-label>Quantité</mat-label>
+    <input matInput (keyup)="onKey($event)" placeholder="Ex. 1.5"> 
+    <span matSuffix>{{selectedIng.unit}}&nbsp;</span> 
+  </mat-form-field> 
+  <mat-form-field appearance="fill" style="width: 58%;">
+    <mat-label>Ingrédient</mat-label>
+    <mat-select [(ngModel)]="selectedIng">
+      <mat-option *ngFor="let ingredient of ingredients | async"  [value]="ingredient">{{ ingredient.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

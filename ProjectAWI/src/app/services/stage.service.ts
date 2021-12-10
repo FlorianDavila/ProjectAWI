@@ -10,22 +10,22 @@ import { MealService } from './meal.service';
 export class StageService {
 
   stages: Observable<Stage[]> = new Observable<Stage[]>(); 
-  private path = '/Stage/';
+  private path = '/Stage';
   private projetawiStore: AngularFirestore;
-  private mealsCollection: AngularFirestoreCollection<Stage>;
-  private mealService: MealService;
+  private stagesCollection: AngularFirestoreCollection<Stage>; 
 
-  constructor(private db: AngularFirestore, mealService: MealService) {
+  constructor(private db: AngularFirestore) {
     this.projetawiStore = db;
-    this.mealsCollection = db.collection(this.path);
-    this.mealService = mealService;
+    this.stagesCollection = db.collection(this.path); 
+    this.getStages();
   } 
 
-  getStages(): Observable<Stage[]> {
-    return this.mealsCollection
+  getStages() {
+    this.stages = this.stagesCollection
     .valueChanges({ idField: "id" }).pipe(
     map(data => data.map(doc => this.jsonToStage(doc))) 
     ); 
+    console.log(this.stages);
   }
 
   jsonToStage(json: any) : Stage {   

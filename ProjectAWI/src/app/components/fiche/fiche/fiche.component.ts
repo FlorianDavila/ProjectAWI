@@ -1,9 +1,13 @@
 import { Component, ComponentFactoryResolver, ComponentRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms'; 
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms'; 
 import { Stage } from 'src/app/models/Stage';
 import { IngredientFormComponent } from '../ingredient-form/ingredient-form.component'; 
 import {CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Ingredient } from 'src/app/models/Ingredient';
+import { MatDialog } from '@angular/material/dialog';
+import { StageDeleteComponent } from '../../../dialogs/stage-delete.component'; 
+import { StageService } from 'src/app/services/stage.service';
+import { IngredientService } from 'src/app/services/ingredient.service';
 
 @Component({
   selector: 'fiche',
@@ -19,12 +23,14 @@ export class FicheComponent {
   listIngredientsForm = new Array<ComponentRef<IngredientFormComponent>>();  
   listStages:  Array<Stage>;   
   stageForm: FormGroup; 
+  selectedExistingStage: Stage;
+  stageSelectedGroup: FormControl = new FormControl();
 
   @ViewChild('parent', { read: ViewContainerRef })
   target!: ViewContainerRef;
   private componentRef!: ComponentRef<any>;
 
-  constructor(private formBuilder: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private formBuilder: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver, public dialog: MatDialog, public stageService: StageService, public ingredientService: IngredientService) {
     this.infoForm = this.formBuilder.group({
       name: '',
       nbGuests: '',
@@ -38,7 +44,7 @@ export class FicheComponent {
   }
   
   ngOnInit(): void { 
-    this.listStages = new Array<Stage>();
+    this.listStages = new Array<Stage>(); 
   }
 
   onSubmitForm(): void {
@@ -60,9 +66,7 @@ export class FicheComponent {
       } 
       else
         this.displayErrorMessageI = true;
-    }
-    
-    console.log(this.listStages)
+    } 
   } 
 
   private add(): void { 
@@ -71,11 +75,11 @@ export class FicheComponent {
     this.listIngredientsForm.push(this.componentRef);  
   }
 
-  OnValidateStage() {    
+  onValidateStage() {     
     if (!this.displayStageList) this.displayStageList = true;
     this.displayErrorMessageTA = false;
     this.displayErrorMessageI = false;
-    this.displayErrorMessageNoName = false;
+    this.displayErrorMessageNoName = false; 
 
     const formValue = this.stageForm.value;
     var name = formValue['stageName'];
@@ -85,23 +89,36 @@ export class FicheComponent {
 
     var ingredients: [Ingredient, string][] = []; 
     this.listIngredientsForm.forEach(element => {
-      if (element.instance.quantityInput && element.instance.selectedIng) { 
-        console.log("azerty")
+      if (element.instance.quantityInput && element.instance.selectedIng) {  
         if (element.instance.selectedIng.name) {
-          ingredients.push([element.instance.selectedIng, element.instance.quantityInput]);  
-          console.log("azerty2")
+          ingredients.push([element.instance.selectedIng, element.instance.quantityInput]);   
         } 
       }
     });  
 
     duration = duration ? ' (' + duration + ')' : '';
-    var stage = new Stage("", '<b>' + name + '<b\>' + '<br\>', ingredients, body.replace('\n','<br\>').substring(0, body.length-1) + duration, 60);
+    var stage = new Stage("", '<b>' + name + '<b\>' + '<br\>', ingredients, body.replace('\n','<br\>') + duration, 60);
     this.listStages.push(stage); 
 
-    this.target.clear();
-    this.stageForm.patchValue({ stageName: '', stageBody: '', stageDuration: '' });
+    this.resetInputs();
+  }
 
-    this.listIngredientsForm = []; 
+  onValidateExistingStage() {
+    if (!this.displayStageList) this.displayStageList = true;
+    var ingre : [Ingredient, string][] = [];
+    ingre.push([new Ingredient("","naa",false,"",0,"u", "4"), "5"]);
+    var stage = new Stage("", '<b>' + this.selectedExistingStage.name + '<b\>' + '<br\>', ingre, this.selectedExistingStage.description!.replace('\n','<br\>') + this.selectedExistingStage.duration, 60);
+    this.listStages.push(stage); 
+
+    this.resetInputs();
+  }
+
+  resetInputs() { 
+    this.target.clear(); 
+    this.listIngredientsForm = [];   
+    this.stageForm.reset();  
+
+    this.stageSelectedGroup.reset();
   }
 
   checkFields(name: string, body: string) : boolean{
@@ -119,4 +136,16 @@ export class FicheComponent {
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.listStages, event.previousIndex, event.currentIndex);
   }
-}  
+
+  deleteStage(stage: Stage) {
+    const dialogRef = this.dialog.open(StageDeleteComponent); 
+    dialogRef.afterClosed().subscribe(result => {
+      var userResponse = result ? JSON.parse(result) : false;
+      if (userResponse) {
+        this.listStages.forEach((element,index)=>{
+          if(element == stage) this.listStages.splice(index,1);
+        }); 
+      }
+    });  
+  }
+} 

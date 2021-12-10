@@ -1,74 +1,81 @@
 <div style="margin-top: 40px;" class="container">
-  <form class="" [formGroup]="infoForm">
-    <div
-      style="display:flex; flex-direction: row; justify-content: center; align-items: center"
-    >
-      <div class="marge">
-        <label for="name">Intitulé</label>
-        <input
-          type="text"
-          id="name"
-          class="form-control"
-          formControlName="name"
-          autocomplete="off"
-        />
-      </div>
-      <div class="marge">
-        <label for="nbGuests">Nb. couverts</label>
-        <input
-          type="text"
-          id="nbGuests"
-          class="form-control"
-          formControlName="nbGuests"
-          autocomplete="off"
-        />
-      </div>
-      <div class="marge">
-        <label for="manager">Responsable</label>
-        <input
-          type="text"
-          id="manager"
-          class="form-control"
-          formControlName="manager"
-          autocomplete="off"
-        />
-      </div>
+  <form [formGroup]="infoForm">
+    <div style="display:flex; flex-direction: row; justify-content: center">
+      <mat-form-field class="marge" appearance="fill">
+        <mat-label>Intitulé</mat-label>
+        <input matInput type="text" formControlName="name" autocomplete="off"> 
+      </mat-form-field>
+      <mat-form-field class="marge" appearance="fill">
+        <mat-label>Nb. couverts</mat-label>
+        <input matInput type="text" formControlName="nbGuests" autocomplete="off"> 
+      </mat-form-field>
+      <mat-form-field class="marge" appearance="fill">
+        <mat-label>Responsable</mat-label>
+        <input matInput type="text" formControlName="manager" autocomplete="off"> 
+      </mat-form-field>  
     </div>
-  </form>
+  </form> 
   <hr/>
-  <div id="container">
-    <div id="left" class="section">
-      <label style="width:100%;">Ingrédients</label>
-      <div #parent></div>
-      <label [className]="displayErrorMessageI ? 'error' : 'invisible'"><i><small>Veuillez sélectionner un ingrédient et renseigner sa quantité avant d'ajouter un nouvel ingrédient</small></i></label>
-      <button
-        class="btn btn-outline-dark" style="margin-top: 10px;"
-        type="button"
-        (click)="addIngredientForm()"
-      >
-        Ajouter
-      </button>
-    </div>
-    <div id="right" class="section">   
-      <form [formGroup]="stageForm" (ngSubmit)="OnValidateStage()">
-        <div>
-          <label for="stageName">Nom de l'étape *</label>
-          <input class="form-control mr-sm-2" id="stageName" type="text" placeholder="Préparation de la crème" formControlName="stageName" autocomplete="off"/> 
-          <label [className]="displayErrorMessageNoName ? 'error' : 'invisible'"><i><small>Veuillez renseigner le nom de l'étape</small></i></label>
-        </div> 
-        <div>
-          <label for="stageBody" style="margin-top: 10px;">Description *</label>
-          <textarea style="border-color: #ced4da; border-radius: 5px; padding: 8px 10px 8px; font-size: medium;" placeholder="Dans un récipient..." id="stageBody" formControlName="stageBody" class="full"></textarea>
-          <label [className]="displayErrorMessageTA ? 'error' : 'invisible'"><i><small>Veuillez renseigner le contenu de l'étape</small></i></label>
+  <mat-tab-group mat-align-tabs="start" animationDuration="0ms">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon" style="margin-right: 8px;">edit</mat-icon> 
+        Etape manuelle
+      </ng-template>
+      <div id="container" style="margin-top: 20px;">
+        <div id="left" class="section">
+          <label style="width:100%;">Ingrédients</label>
+          <div #parent></div>
+          <label [className]="displayErrorMessageI ? 'error' : 'invisible'"><small>Veuillez sélectionner un ingrédient et renseigner sa quantité avant d'ajouter un nouvel ingrédient</small></label>
+          <button mat-raised-button color="primary" style="margin-top: 10px;" type="button" (click)="addIngredientForm()">Ajouter</button>
         </div>
-        <div>
-          <label for="stageDuration" style="margin-top: 2px;">Durée</label>
-          <input class="form-control mr-sm-2" id="stageDuration" type="text" placeholder="60 minutes" formControlName="stageDuration" autocomplete="off"/>  
+        <div id="right" class="section">   
+          <label style="width:100%;">Etape</label>
+          <form [formGroup]="stageForm" (ngSubmit)="onValidateStage()">
+            <mat-form-field appearance="fill" class="fullResume">
+              <mat-label>Nom de l'étape</mat-label>
+              <input required="test" matInput type="text" placeholder="Préparation de la crème" formControlName="stageName" autocomplete="off"> 
+              <mat-error *ngIf="displayErrorMessageNoName ? 'error' : 'invisible'">
+                Veuillez renseigner le nom de l'étape
+              </mat-error> 
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="fullResume" style="margin-top: 10px;">
+              <mat-label>Description</mat-label>
+              <textarea required matInput type="text" style="height: 120px" placeholder="Dans un récipient..." formControlName="stageBody" autocomplete="off"></textarea>  
+              <mat-error *ngIf="displayErrorMessageTA ? 'error' : 'invisible'">
+                Veuillez renseigner le contenu de l'étape
+              </mat-error> 
+            </mat-form-field> 
+            <mat-form-field appearance="fill" class="fullResume" style="margin-top: 10px;">
+              <mat-label>Durée</mat-label>
+              <input matInput  type="text" placeholder="60 minutes" formControlName="stageDuration" autocomplete="off">  
+            </mat-form-field> 
+            <button mat-raised-button color="primary" style="margin-top:10px;" class="r" type="submit">Valider</button>
+          </form>
         </div>  
-        <button style="margin-top:15px;" class="btn btn-outline-dark r" type="submit">Valider l'étape</button>
-      </form>
-    </div>  
-  </div>
+      </div>
+    </mat-tab>
+    <mat-tab> 
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon" style="margin-right: 8px;">library_books</mat-icon>
+        Etape existante
+      </ng-template>
+      <mat-form-field appearance="fill" style="margin-top: 20px; width: 100%;">
+        <mat-label>Etape</mat-label>
+         <mat-select [(ngModel)]="selectedExistingStage" [formControl]="stageSelectedGroup">
+          <mat-option *ngFor="let existingStage of stageService.stages | async" [value]="existingStage">
+            {{ existingStage.name }}
+            <span>(</span>
+            <span *ngFor="let ing of ingredientService.ingredients | async">{{ ing.name }} 
+              <span>, </span>
+            </span> 
+            <span>)</span> 
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" style="margin-top:10px; margin-bottom: 20px;" class="r" type="submit" (click)="onValidateExistingStage()">Valider</button> 
+    </mat-tab> 
+  </mat-tab-group> 
   <hr/> 
   <div cdkDropList class="example-list example-boundary" *ngIf="displayStageList" (cdkDropListDropped)="drop($event)">
     <div class="example-box" *ngFor="let stage of this.listStages; let index = index" cdkDrag cdkDragBoundary=".example-boundary"> 
@@ -92,22 +99,28 @@
             </div>
             <div class="rightResume sectionResume">
                 <div class="containerHandler">
-                    <div class="leftResume"> 
-                        <div class="fullResume long-and-truncated" [innerHTML]="stage.name"></div> 
-                        <div class="fullResume long-and-truncated" style="margin-top: 8px;" [innerHTML]="stage.description"></div> 
-                    </div>
-                    <div class="example-handle" cdkDragHandle>
-                        <svg width="24px" fill="#ced4da" viewBox="0 0 24 24">
-                            <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-                            <path d="M0 0h24v24H0z" fill="none"></path>
-                        </svg>
+                  <div class="leftResume" style="margin-right: 15px;"> 
+                      <div class="fullResume long-and-truncated" [innerHTML]="stage.name"></div> 
+                      <div class="fullResume long-and-truncated" style="margin-top: 8px;" [innerHTML]="stage.description"></div> 
                   </div>
+                  <div style="display: flex; flex-wrap: wrap; justify-content: center">
+                    <div class="example-handle" cdkDragHandle>
+                      <svg width="24px" fill="#ced4da">
+                          <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                          <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg>
+                    </div>
+                    <button mat-icon-button class="icon-button-small" style="position: absolute; margin-top: 30px;" (click)="deleteStage(stage)">
+                      <mat-icon style="color: #ced4da;">delete</mat-icon>
+                    </button> 
+                  </div> 
                 </div>
             </div>
           </div>
         </div>
       </div> 
     </div>
-  </div>  
-  <div style="height: 20px;"></div>
+  </div>
+  <button *ngIf="displayStageList" mat-raised-button color="primary" style="margin-top:10px;" class="r" type="submit">Enregistrer la fiche technique</button>
+  <div style="height: 20px;"></div>  
 </div>

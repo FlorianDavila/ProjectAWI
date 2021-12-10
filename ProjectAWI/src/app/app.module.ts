@@ -26,6 +26,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';  
+import { MatDialogModule } from '@angular/material/dialog';
+import { StageDeleteComponent } from './dialogs/stage-delete.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
@@ -43,10 +48,14 @@ const appRoutes: Routes = [
     DragDropModule,
     MatInputModule,
     MatSelectModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatTabsModule
   ],
-  declarations: [AppComponent, SearchBarComponent, HomepageComponent, FicheComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent],
-  exports: [AppComponent, SearchBarComponent, FicheComponent],
+  declarations: [AppComponent, SearchBarComponent, HomepageComponent, StageDeleteComponent, FicheComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent, StageDeleteComponent],
+  exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],
   providers: [IngredientService]
