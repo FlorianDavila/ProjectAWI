@@ -14,7 +14,7 @@ export class IngredientFormComponent implements OnInit {
   defaultOption: Ingredient = { id: 'ing', name: 'Ingrédients...',  unit: 'u.',isAllergern: false, category: "ic", price: 0, allergenCategory: null }
   //ingredients: Ingredient[] = [this.defaultOption];
   ingredients: Observable<Ingredient[]>;
-  selectedIng = this.defaultOption; 
+  selectedIng = this.defaultOption;  
 
   public constructor (public ingredientService: IngredientService) {}
 
@@ -36,9 +36,5 @@ export class IngredientFormComponent implements OnInit {
     this.ingredients.pipe(tap(ings => {
       ings.unshift(this.defaultOption);
     }));  
-  }
-
-  onChange(val: Ingredient) {  
-    this.selectedIng = val;
-  }
+  } 
 } 
