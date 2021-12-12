@@ -1,5 +1,9 @@
-.item {
-    margin: 2em auto 2em;
-    justify-content: center;
-  }
-  
+.item { 
+  justify-content: center;
+}
+
+.borderCust {
+  padding: 8px;
+  background-color: white;
+  position:relative;
+}

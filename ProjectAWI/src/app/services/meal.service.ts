@@ -11,7 +11,7 @@ import { StageService } from './stage.service';
 export class MealService {
 
   meals: Observable<Meal[]> = new Observable<Meal[]>(); 
-  private path = '/Meal/';
+  private path = '/Meals/';
   private projetawiStore: AngularFirestore;
   private mealsCollection: AngularFirestoreCollection<Meal>;
   private stageService: StageService; 
@@ -26,7 +26,7 @@ export class MealService {
     return this.mealsCollection
     .valueChanges({ idField: "id" }).pipe(
     map(data => data.map(doc => this.jsonToMeal(doc))) 
-    ); 
+    );  
   }
 
   jsonToMeal(json: any) : Meal {   
@@ -35,7 +35,7 @@ export class MealService {
       json.name,
       json.manager,
       json.category,
-      json.nbGuets,
+      json.nbGuests,
       json.stageList
     )
   }

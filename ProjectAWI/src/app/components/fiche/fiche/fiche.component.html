@@ -60,7 +60,7 @@
         <mat-icon class="example-tab-icon" style="margin-right: 8px;">library_books</mat-icon>
         Etape existante
       </ng-template>
-      <mat-form-field appearance="fill" style="margin-top: 20px; width: 100%;">
+      <mat-form-field appearance="fill" style="padding: 20px 20px 0px; width: 100%">
         <mat-label>Etape</mat-label>
          <mat-select [(ngModel)]="selectedExistingStage" [formControl]="stageSelectedGroup">
           <mat-option *ngFor="let existingStage of stageService.stages | async" [value]="existingStage">
@@ -73,7 +73,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button mat-raised-button color="primary" style="margin-top:10px; margin-bottom: 20px;" class="r" type="submit" (click)="onValidateExistingStage()">Valider</button> 
+      <button mat-raised-button color="primary" style="margin-top:10px; margin: 0px 20px 20px;" class="r" type="submit" (click)="onValidateExistingStage()">Valider</button> 
     </mat-tab> 
   </mat-tab-group> 
   <hr/> 
