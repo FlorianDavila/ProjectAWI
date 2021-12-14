@@ -1,16 +1,15 @@
-import { Ingredient } from "./Ingredient";
 import { Meal } from "./Meal";
 
 export class Stage {
-    id?: string;
+    id: string | null;
     name: string | null;
-    ingredients: [Ingredient, string][];
+    ingredients: {};
     description: string | null;
     duration: number | null;
     meal: Meal | null;
 
-    public constructor(id:string, name?: string, ingredients?: [Ingredient, string][], description?: string, duration?: number, meal?: Meal) {
-        this.id = id;
+    public constructor(id:string, name?: string, ingredients?: {}, description?: string, duration?: number, meal?: Meal) {
+        this.id = id ? id : null;
         if (name) this.name = name;
         if (ingredients) this.ingredients = ingredients;
         if (description) this.description = description;

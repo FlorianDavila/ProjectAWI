@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { StageDeleteComponent } from '../../../dialogs/stage-delete.component'; 
 import { StageService } from 'src/app/services/stage.service';
 import { IngredientService } from 'src/app/services/ingredient.service';
+import { Meal } from 'src/app/models/Meal';
+import { MealService } from 'src/app/services/meal.service';
 
 @Component({
   selector: 'fiche',
@@ -30,11 +32,12 @@ export class FicheComponent {
   target!: ViewContainerRef;
   private componentRef!: ComponentRef<any>;
 
-  constructor(private formBuilder: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver, public dialog: MatDialog, public stageService: StageService, public ingredientService: IngredientService) {
+  constructor(private formBuilder: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver, public dialog: MatDialog, public stageService: StageService, public ingredientService: IngredientService, public mealService: MealService) {
     this.infoForm = this.formBuilder.group({
       name: '',
       nbGuests: '',
-      manager: ''
+      manager: '',
+      category: 'Entrée'
     });
     this.stageForm = this.formBuilder.group({
       stageName: '',
@@ -52,7 +55,15 @@ export class FicheComponent {
     const name = formValue['name'];
     const nbGuests = formValue['nbGuests'];
     const manager = formValue['manager'];
-    console.log(name + '\n' + nbGuests + '\n' + manager);
+    const category = formValue['category'];
+    var ingredients = [];
+    var meal = new Meal(null, name, manager, category, nbGuests, this.listStages);
+    this.mealService.addUpdateMeal(meal);
+
+    this.infoForm.reset();
+    this.infoForm.markAsUntouched();
+    this.resetInputs()
+    this.listStages = []
   }
 
   addIngredientForm(): void { 
@@ -87,11 +98,13 @@ export class FicheComponent {
     var duration = formValue['stageDuration'];
     if (!this.checkFields(name, body)) return;
 
-    var ingredients: [Ingredient, string][] = []; 
+    var ingredients: { name: string, unit: string, quantity: string} = { name: "", unit: "", quantity: ""}; 
     this.listIngredientsForm.forEach(element => {
       if (element.instance.quantityInput && element.instance.selectedIng) {  
         if (element.instance.selectedIng.name) {
-          ingredients.push([element.instance.selectedIng, element.instance.quantityInput]);   
+          ingredients["name"] = element.instance.selectedIng.name;
+          ingredients["unit"] = element.instance.selectedIng.unit;   
+          ingredients["quantity"] = element.instance.quantityInput;   
         } 
       }
     });  
@@ -115,8 +128,9 @@ export class FicheComponent {
 
   resetInputs() { 
     this.target.clear(); 
-    this.listIngredientsForm = [];   
-    this.stageForm.reset();  
+    this.listIngredientsForm = [];  
+    this.stageForm.reset();   
+    this.stageForm.markAsUntouched();
 
     this.stageSelectedGroup.reset();
   }
