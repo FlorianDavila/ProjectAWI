@@ -6,7 +6,7 @@ import {CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Ingredient } from 'src/app/models/Ingredient';
 import { MatDialog } from '@angular/material/dialog';
 import { StageDeleteComponent } from '../../../dialogs/stage-delete.component'; 
-import { StageService } from 'src/app/services/stage.service';
+
 import { IngredientService } from 'src/app/services/ingredient.service';
 import { Meal } from 'src/app/models/Meal';
 import { MealService } from 'src/app/services/meal.service';
@@ -25,14 +25,14 @@ export class FicheComponent {
   listIngredientsForm = new Array<ComponentRef<IngredientFormComponent>>();  
   listStages:  Array<Stage>;   
   stageForm: FormGroup; 
-  selectedExistingStage: Stage;
-  stageSelectedGroup: FormControl = new FormControl();
+  selectedExistingMeal: Stage;
+  mealSelectedGroup: FormControl = new FormControl();
 
   @ViewChild('parent', { read: ViewContainerRef })
   target!: ViewContainerRef;
   private componentRef!: ComponentRef<any>;
 
-  constructor(private formBuilder: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver, public dialog: MatDialog, public stageService: StageService, public ingredientService: IngredientService, public mealService: MealService) {
+  constructor(private formBuilder: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver, public dialog: MatDialog, public ingredientService: IngredientService, public mealService: MealService) {
     this.infoForm = this.formBuilder.group({
       name: '',
       nbGuests: '',
@@ -55,13 +55,18 @@ export class FicheComponent {
     const name = formValue['name'];
     const nbGuests = formValue['nbGuests'];
     const manager = formValue['manager'];
-    const category = formValue['category'];
-    var ingredients = [];
-    var meal = new Meal(null, name, manager, category, nbGuests, this.listStages);
-    this.mealService.addUpdateMeal(meal);
+    const category = formValue['category']; 
+
+    var stages: any[] = [];
+    this.listStages.forEach(s => { 
+      var toPush = { name: s.name, ingredients: s.ingredients, description: s.description, duration: s.duration }
+      stages.push(toPush);
+    });
+
+    var meal = new Meal(null, name, manager, category, nbGuests, stages); 
+    this.mealService.addUpdateMeal(meal); 
 
     this.infoForm.reset();
-    this.infoForm.markAsUntouched();
     this.resetInputs()
     this.listStages = []
   }
@@ -118,9 +123,13 @@ export class FicheComponent {
 
   onValidateExistingStage() {
     if (!this.displayStageList) this.displayStageList = true;
-    var ingre : [Ingredient, string][] = [];
-    ingre.push([new Ingredient("","naa",false,"",0,"u", "4"), "5"]);
-    var stage = new Stage("", '<b>' + this.selectedExistingStage.name + '<b\>' + '<br\>', ingre, this.selectedExistingStage.description!.replace('\n','<br\>') + this.selectedExistingStage.duration, 60);
+    var stage = new Stage(
+      null, 
+      this.selectedExistingMeal.name, 
+      this.selectedExistingMeal.ingredients, 
+      this.selectedExistingMeal.description?.replace('\n','<br\>'),
+      this.selectedExistingMeal.duration
+    );
     this.listStages.push(stage); 
 
     this.resetInputs();
@@ -132,7 +141,7 @@ export class FicheComponent {
     this.stageForm.reset();   
     this.stageForm.markAsUntouched();
 
-    this.stageSelectedGroup.reset();
+    this.mealSelectedGroup.reset();
   }
 
   checkFields(name: string, body: string) : boolean{

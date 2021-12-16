@@ -70,14 +70,14 @@
         </ng-template>
         <mat-form-field appearance="fill" style="padding: 20px 20px 0px; width: 100%">
           <mat-label>Etape</mat-label>
-          <mat-select [(ngModel)]="selectedExistingStage" [formControl]="stageSelectedGroup">
-            <mat-option *ngFor="let existingStage of stageService.stages | async" [value]="existingStage">
-              {{ existingStage.name }}
-              <span>(</span>
-              <span *ngFor="let ing of ingredientService.ingredients | async">{{ ing.name }} 
-                <span>, </span>
+          <mat-select [(ngModel)]="selectedExistingMeal" [formControl]="mealSelectedGroup">
+            <mat-option *ngFor="let existingMeal of mealService.meals | async" [value]="existingMeal">
+              {{ existingMeal.name }}
+              <span *ngIf="existingMeal.stageList.length > 0">(</span>
+              <span *ngFor="let stage of existingMeal.stageList; let isLast = last">{{ stage.name }} 
+                <span *ngIf="!isLast ">, </span>
               </span> 
-              <span>)</span> 
+              <span *ngIf="existingMeal.stageList.length > 0">)</span> 
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -91,8 +91,8 @@
           <div class="leftResume sectionResume fullResume"> 
             <div *ngIf="stage.ingredients; else noIngredients" class="sectionResume"> 
               <ul *ngFor="let ingredient of stage.ingredients | keyvalue">
-                <!-- <li>{{ ingredient["name"].value }} {{ ingredient["unit"].value }} {{ ingredient["quantity"].value }}</li>  -->
-              </ul> 
+                <!-- <li><span>{{ ingredient["name"].value }} {{ ingredient["unit"].value }} {{ ingredient["quantity"].value }}</span></li>  -->
+              </ul>
             </div>
             <ng-template #noIngredients>
               <div class="sectionResume">

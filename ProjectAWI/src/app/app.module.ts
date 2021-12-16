@@ -33,6 +33,7 @@ import { StageDeleteComponent } from './dialogs/stage-delete.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MealService } from './services/meal.service';
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
@@ -62,6 +63,6 @@ const appRoutes: Routes = [
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],
-  providers: [IngredientService]
+  providers: [IngredientService, MealService]
 })
 export class AppModule { }

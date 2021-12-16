@@ -6,9 +6,9 @@ export class Meal {
     manager: string;
     category: string;
     nbGuests: number;
-    stageList: Stage[];
+    stageList: any[];
 
-    public constructor(id:string | null, name: string, manager: string, category: string, nbGuests: number, stageList: Stage[]) {
+    public constructor(id:string | null, name: string, manager: string, category: string, nbGuests: number, stageList: any[]) {
         this.id = id ? id : null;
         this.name = name;
         this.manager = manager;

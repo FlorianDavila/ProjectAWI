@@ -8,7 +8,7 @@ export class Stage {
     duration: number | null;
     meal: Meal | null;
 
-    public constructor(id:string, name?: string, ingredients?: {}, description?: string, duration?: number, meal?: Meal) {
+    public constructor(id:string|null, name?: string|null, ingredients?: {}|null, description?: string|null, duration?: number|null, meal?: Meal|null) {
         this.id = id ? id : null;
         if (name) this.name = name;
         if (ingredients) this.ingredients = ingredients;
