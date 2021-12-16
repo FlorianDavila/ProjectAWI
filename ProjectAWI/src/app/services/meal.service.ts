@@ -36,7 +36,6 @@ export class MealService {
   }
 
   jsonToMeal(json: any) : Meal {
-    console.log(json.stageList);
     return new Meal( 
       json.id,
       json.name,

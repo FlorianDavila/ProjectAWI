@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ComponentRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ComponentRef, SystemJsNgModuleLoader, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'; 
 import { Stage } from 'src/app/models/Stage';
 import { IngredientFormComponent } from '../ingredient-form/ingredient-form.component'; 
@@ -25,7 +25,7 @@ export class FicheComponent {
   listIngredientsForm = new Array<ComponentRef<IngredientFormComponent>>();  
   listStages:  Array<Stage>;   
   stageForm: FormGroup; 
-  selectedExistingMeal: Stage;
+  selectedExistingMeal: Meal;
   mealSelectedGroup: FormControl = new FormControl();
 
   @ViewChild('parent', { read: ViewContainerRef })
@@ -123,14 +123,17 @@ export class FicheComponent {
 
   onValidateExistingStage() {
     if (!this.displayStageList) this.displayStageList = true;
-    var stage = new Stage(
-      null, 
-      this.selectedExistingMeal.name, 
-      this.selectedExistingMeal.ingredients, 
-      this.selectedExistingMeal.description?.replace('\n','<br\>'),
-      this.selectedExistingMeal.duration
-    );
-    this.listStages.push(stage); 
+    this.selectedExistingMeal.stageList.forEach(s => {
+      console.log(s);
+      var stage = new Stage(
+        null, 
+        s.name, 
+        s.ingredients, 
+        s.description,
+        s.duration
+      );
+      this.listStages.push(stage); 
+    }); 
 
     this.resetInputs();
   }
