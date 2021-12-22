@@ -36,7 +36,7 @@ export class MealService {
   }
 
   jsonToMeal(json: any) : Meal { 
-    var m = new Meal( 
+    return new Meal( 
       json.id,
       json.name,
       json.manager,
@@ -45,7 +45,6 @@ export class MealService {
       json.stageList ? json.stageList : [],
       json.matS,
       json.matD
-    ) 
-    return m;
+    )  
   }
 }
