@@ -1,5 +1,5 @@
-<div style="margin-top: 40px;" class="container">
-  <form [formGroup]="infoForm" (ngSubmit)="onSubmitForm()">
+<div style="margin-top: 100px;" class="container">
+  <form [formGroup]="infoForm" (ngSubmit)="onSubmitForm()">  
     <div style="display:flex; flex-direction: row; justify-content: center">
       <mat-form-field class="marge" appearance="fill">
         <mat-label>Intitulé</mat-label>
@@ -22,7 +22,17 @@
           <mat-option value="Accompagnement">Accompagnement</mat-option>
         </mat-select>
       </mat-form-field>  
-    </div>
+    </div> 
+    <div style="display: flex; justify-content: center;">
+        <mat-form-field class="marge" appearance="fill" style="width: 37%;">
+          <mat-label>Matériel spécifique</mat-label>
+          <textarea matInput type="text" style="height: 40px;" placeholder="Casseroles" formControlName="matS" autocomplete="off"></textarea>  
+        </mat-form-field>
+        <mat-form-field class="marge" appearance="fill" style="width: 37%;">
+          <mat-label>Matériel de dressage</mat-label>
+          <textarea matInput type="text" style="height: 40px;" placeholder="Couteaux" formControlName="matD" autocomplete="off"></textarea>  
+        </mat-form-field>
+    </div>   
     <hr/>
     <mat-tab-group mat-align-tabs="start" animationDuration="0ms">
       <mat-tab>
@@ -58,7 +68,7 @@
                 <mat-label>Durée</mat-label>
                 <input matInput  type="text" placeholder="60 minutes" formControlName="stageDuration" autocomplete="off">  
               </mat-form-field> 
-              <button mat-raised-button color="primary" style="margin-top:10px;" class="r" type="submit">Valider</button>
+              <button mat-raised-button color="primary" style="margin-top:10px;" class="r" type="submit">Valider cette nouvelle étape</button>
             </form>
           </div>  
         </div>
@@ -72,16 +82,22 @@
           <mat-label>Etape</mat-label>
           <mat-select [(ngModel)]="selectedExistingMeal" [formControl]="mealSelectedGroup">
             <mat-option *ngFor="let existingMeal of mealService.meals | async" [value]="existingMeal">
-              {{ existingMeal.name }}
-              <span *ngIf="existingMeal.stageList.length > 0">(</span>
-              <span *ngFor="let stage of existingMeal.stageList; let isLast = last">{{ stage.name }} 
-                <span *ngIf="!isLast ">, </span>
-              </span> 
-              <span *ngIf="existingMeal.stageList.length > 0">)</span> 
+              <div *ngIf="existingMeal.name; else hasNoName" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; color: gray;">
+                <span style="color: black">{{ existingMeal.name }} </span>
+                <span>
+                  <span *ngIf="existingMeal.stageList.length > 0">(</span>
+                  <span *ngFor="let stage of existingMeal.stageList; let isLast = last">
+                    <div *ngIf="stage.name; then stageHasName else stageHasNoName"></div>
+                    <ng-template #stageHasName>{{ stage.name }}</ng-template>
+                    <ng-template #stageHasNoName>Sans titre</ng-template>
+                  <span *ngIf="!isLast">, </span></span><span *ngIf="existingMeal.stageList.length > 0">)</span> 
+                </span> 
+              </div> 
+              <ng-template #hasNoName>Aucune fiche technique enregistrée</ng-template> 
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button mat-raised-button color="primary" style="margin-top:10px; margin: 0px 20px 20px;" class="r" type="submit" (click)="onValidateExistingStage()">Valider</button> 
+        <button mat-raised-button color="primary" style="margin-top:10px; margin: 0px 20px 20px;" class="r" (click)="onValidateExistingStage()">Valider cette étape existante</button> 
       </mat-tab> 
     </mat-tab-group> 
     <hr/> 
@@ -89,10 +105,12 @@
       <div class="example-box" *ngFor="let stage of this.listStages; let index = index" cdkDrag cdkDragBoundary=".example-boundary"> 
         <div class="containerResume">
           <div class="leftResume sectionResume fullResume"> 
-            <div *ngIf="stage.ingredients; else noIngredients" class="sectionResume"> 
-              <ul *ngFor="let ingredient of stage.ingredients | keyvalue">
-                <!-- <li><span>{{ ingredient["name"].value }} {{ ingredient["unit"].value }} {{ ingredient["quantity"].value }}</span></li>  -->
-              </ul>
+            <div *ngIf="stage.ingredients && stage.ingredients.length > 0; else noIngredients" class="sectionResume">  
+              <div *ngFor="let ing of stage.ingredients">
+                <ng-container class="float:left">{{ getValueByKey(ing, "quantity") }} </ng-container> 
+                <ng-container class="float:left">{{ getValueByKey(ing, "unit") }} </ng-container> 
+                <ng-container class="float:left">{{ getValueByKey(ing, "name") }}</ng-container>
+              </div>   
             </div>
             <ng-template #noIngredients>
               <div class="sectionResume">
@@ -108,8 +126,13 @@
               <div class="rightResume sectionResume">
                   <div class="containerHandler">
                     <div class="leftResume" style="margin-right: 15px;"> 
-                        <div class="fullResume long-and-truncated" [innerHTML]="stage.name"></div> 
-                        <div class="fullResume long-and-truncated" style="margin-top: 8px;" [innerHTML]="stage.description"></div> 
+                        <div class="fullResume long-and-truncated" [innerHTML]="stage.name" style="font-weight: bold;"></div> 
+                        <div *ngIf="stage.duration; else noDuration" class="fullResume long-and-truncated" style="margin-top: 8px;" 
+                          [innerHTML]="stage.description + ' (' +  stage.duration + ')'">
+                        </div>  
+                        <ng-template #noDuration>
+                          <div class="fullResume long-and-truncated" style="margin-top: 8px;" [innerHTML]="stage.description + ' (durée indeterminée)'"></div> 
+                        </ng-template>
                     </div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center">
                       <div class="example-handle" cdkDragHandle>
@@ -129,7 +152,7 @@
         </div> 
       </div>
     </div>
-    <button *ngIf="displayStageList" mat-raised-button color="primary" style="margin-top:10px;" class="r" type="submit">Enregistrer la fiche technique</button>
+    <button *ngIf="listStages.length > 0" mat-raised-button color="primary" style="margin-top:10px;" class="r" type="submit">Enregistrer la fiche technique</button>
   </form> 
   <div style="height: 20px;"></div>  
 </div>

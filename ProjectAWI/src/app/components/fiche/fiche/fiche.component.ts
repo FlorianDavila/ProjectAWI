@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ComponentRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ComponentRef, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms'; 
 import { Stage } from 'src/app/models/Stage';
 import { IngredientFormComponent } from '../ingredient-form/ingredient-form.component'; 
@@ -25,7 +25,7 @@ export class FicheComponent {
   listIngredientsForm = new Array<ComponentRef<IngredientFormComponent>>();  
   listStages:  Array<Stage>;   
   stageForm: FormGroup; 
-  selectedExistingMeal: Stage;
+  selectedExistingMeal: Meal;
   mealSelectedGroup: FormControl = new FormControl();
 
   @ViewChild('parent', { read: ViewContainerRef })
@@ -37,25 +37,31 @@ export class FicheComponent {
       name: '',
       nbGuests: '',
       manager: '',
-      category: 'Entrée'
+      category: 'Entrée',
+      matS: '',
+      matD: ''
     });
     this.stageForm = this.formBuilder.group({
       stageName: '',
       stageBody: '',
       stageDuration: ''
-    });
+    }); 
+    this.listStages = new Array<Stage>()
   }
   
-  ngOnInit(): void { 
-    this.listStages = new Array<Stage>(); 
-  }
+  ngOnInit(): void {  
+  } 
 
-  onSubmitForm(): void {
+  onSubmitForm(): void {  
     const formValue = this.infoForm.value;
     const name = formValue['name'];
     const nbGuests = formValue['nbGuests'];
     const manager = formValue['manager'];
     const category = formValue['category']; 
+    const matS = formValue['matS']; 
+    const matD = formValue['matD']; 
+  
+    if (!name ||!nbGuests || !manager || !category) return;
 
     var stages: any[] = [];
     this.listStages.forEach(s => { 
@@ -63,7 +69,7 @@ export class FicheComponent {
       stages.push(toPush);
     });
 
-    var meal = new Meal(null, name, manager, category, nbGuests, stages); 
+    var meal = new Meal(null, name, manager, category, nbGuests, stages, matS, matD);  
     this.mealService.addUpdateMeal(meal); 
 
     this.infoForm.reset();
@@ -71,17 +77,18 @@ export class FicheComponent {
     this.listStages = []
   }
 
-  addIngredientForm(): void { 
+  addIngredientForm(): void {  
     if (this.listIngredientsForm.length == 0)
       this.add();
     else {
       const ing = this.listIngredientsForm[this.listIngredientsForm.length - 1].instance;
-      if (ing.selectedIng.name != "Ingrédients..." && ing.quantityInput != undefined) { 
+      if (ing.selectedIng.name == "Ingrédients..." || ing.quantityInput == undefined || ing.quantityInput == null) { 
+        this.displayErrorMessageI = true;
+      } 
+      else { 
         this.add();
         this.displayErrorMessageI = false;
-      } 
-      else
-        this.displayErrorMessageI = true;
+      }
     } 
   } 
 
@@ -103,36 +110,44 @@ export class FicheComponent {
     var duration = formValue['stageDuration'];
     if (!this.checkFields(name, body)) return;
 
-    var ingredients: { name: string, unit: string, quantity: string} = { name: "", unit: "", quantity: ""}; 
-    this.listIngredientsForm.forEach(element => {
-      if (element.instance.quantityInput && element.instance.selectedIng) {  
-        if (element.instance.selectedIng.name) {
-          ingredients["name"] = element.instance.selectedIng.name;
-          ingredients["unit"] = element.instance.selectedIng.unit;   
-          ingredients["quantity"] = element.instance.quantityInput;   
-        } 
+    var ret = false;
+    var ingredients : {name: string, unit: string, quantity: string}[] = [];  
+    this.listIngredientsForm.forEach(element => { 
+      if (element.instance.quantityInput != undefined && element.instance.quantityInput != "" && element.instance.selectedIng.name != "Ingrédients...") {
+        var i = {
+          name: element.instance.selectedIng.name,
+          unit: element.instance.selectedIng.unit,
+          quantity: element.instance.quantityInput
+        };
+        ingredients.push(i);
+      }  
+      else {
+        this.displayErrorMessageI = true;
+        ret = true;
       }
-    });  
+    });   
 
-    duration = duration ? ' (' + duration + ')' : '';
-    var stage = new Stage("", '<b>' + name + '<b\>' + '<br\>', ingredients, body.replace('\n','<br\>') + duration, 60);
+    if (ret) return;
+
+    var stage = new Stage(null, name, ingredients, body, duration);
     this.listStages.push(stage); 
 
-    this.resetInputs();
+    this.resetInputs(); 
   }
 
   onValidateExistingStage() {
     if (!this.displayStageList) this.displayStageList = true;
-    var stage = new Stage(
-      null, 
-      this.selectedExistingMeal.name, 
-      this.selectedExistingMeal.ingredients, 
-      this.selectedExistingMeal.description?.replace('\n','<br\>'),
-      this.selectedExistingMeal.duration
-    );
-    this.listStages.push(stage); 
-
-    this.resetInputs();
+    this.selectedExistingMeal.stageList.forEach(element => {
+      var stage = new Stage(
+        null, 
+        element.name ? element.name : "", 
+        element.ingredients ? element.ingredients : {}, 
+        element.description ? element.description : "",
+        element.duration ? element.duration : null
+      );
+      this.listStages.push(stage);   
+    }); 
+    this.resetInputs(); 
   }
 
   resetInputs() { 
@@ -170,5 +185,15 @@ export class FicheComponent {
         }); 
       }
     });  
+  }
+
+  getValueByKey(dic: any, key: string) : any {
+    if (key == "name" || key == "unit" || key == "quantity") {
+      try {
+        var obj = { name : dic.name, unit: dic.unit, quantity: dic.quantity }; 
+        return obj[key];
+      } catch (error) { }
+    }
+    else return "";
   }
 } 

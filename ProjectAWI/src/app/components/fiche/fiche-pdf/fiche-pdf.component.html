@@ -1,0 +1,96 @@
+<div  *ngIf="meal" style="display: flex; justify-content: center; margin-top: 50px;">  
+    <button mat-fab color="primary" (click)="downloadAsPDF()">
+        <mat-icon>cloud_download</mat-icon>
+    </button>
+</div> 
+<div style="margin: 50px auto; width: 60%;"> 
+    <div id="pdfTable" #pdfTable *ngIf="meal">   
+        <table class="tg" table width="100%">   
+            <tr>
+                <th colspan="7" width="100%" class="textcenter title">FICHE TECHNIQUE</th>  
+            </tr>   
+            <tr>
+                <th class="title" width="46%">INTITULE</th>
+                <th width="2%" class=" midcol"></th> 
+                <th class="title" width="26%">RESPONSABLE</th>
+                <th class="title" width="26%">NBRE DE COUVERTS</th>  
+            </tr> 
+            <tr>
+                <td width="46%" style="border-bottom-color: transparent">{{ meal.name }}</td>
+                <td width="2%" class=" midcol"></td> 
+                <td width="26%" style="border-bottom-color: transparent">{{ meal.manager }}</td>
+                <td width="26%" style="border-bottom-color: transparent">{{ meal.nbGuests }}</td>  
+            </tr>    
+        </table>   
+        
+        <table table width="100%" class="min-height">
+            <tr style="height: 20px;">
+                <th width="22%" class="title" style="padding: 0px;">DENREES</th>
+                <th width="12%" class="title" style="padding: 0px;">UNITES</th>
+                <th width="12%" class="title" style="padding: 0px;">QUANTITES</th>
+                <th width="2%" class="midcol" style="padding: 0px; border-top-color: transparent;"></th> 
+                <th width="6%" class="title" style="border-left-color: transparent;">N°</th>
+                <th width="40%" class="title" style="border-left-color: transparent;">TECHNIQUES DE REALISATION</th>  
+                <th width="6%" class="title" style="border-left-color: transparent;">DUREE</th>    
+            </tr>
+            <!-- vvv - content - vvv --> 
+            <tr *ngFor="let stage of meal.stageList; let index = index"> 
+                <td width="22%" style="padding: 4px 0px 50px 1%; border-top-color: transparent; border-bottom-color: transparent; text-align: start;">
+                    <div *ngFor="let ing of stage.ingredients">
+                        {{ ing.name }}
+                    </div>
+                </td>
+                <td width="12%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">
+                    <div *ngFor="let ing of stage.ingredients">
+                        {{ ing.unit }}
+                    </div>
+                </td>
+                <td width="12%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">
+                    <div *ngFor="let ing of stage.ingredients">
+                        {{ ing.quantity }}
+                    </div>
+                </td>  
+                <td width="2%" class="midcol" style="padding: 0px; border-top-color: transparent;"></td> 
+                <td width="6%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;">{{ index + 1 }}</td>
+                <td width="40%" style="padding: 4px 0px 50px 1%; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent; text-align: start;"><u>{{ stage.name }}</u><br>{{ stage.description }}</td>  
+                <td width="6%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;">{{ stage.duration }}</td>  
+            </tr>  
+            <tr style="height: 100%">  
+                <td width="22%" style="border-top-color: transparent; border-bottom-color: transparent; text-align: start;"></td>
+                <td width="12%" style="border-top-color: transparent; border-bottom-color: transparent;"></td>
+                <td width="12%" style="border-top-color: transparent; border-bottom-color: transparent;"></td>  
+                <td width="2%" class="midcol" style="border-top-color: transparent;"></td> 
+                <td width="6%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;"></td>
+                <td width="40%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;"></td>  
+                <td width="6%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;"></td>  
+            </tr>
+            <ng-template #empty>
+                <tr style="height: 1000px;">
+                    <td width="22%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
+                    <td width="12%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
+                    <td width="12%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
+                    <td width="2%" class="midcol" style="padding: 0px; border-top-color: transparent;"></td> 
+                    <td width="6%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent"></td>
+                    <td width="40%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent"></td>  
+                    <td width="6%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent"></td>    
+                </tr>
+            </ng-template>
+        </table> 
+        
+        <table table width="100%" class="height: 200px">     
+            <tr>
+                <th width="46%" class="title">MATERIELS SPECIFIQUES</th>
+                <th width="2%" class="midcol" style="border-top-color: transparent;"></th> 
+                <th width="52%" class="title">MATERIELS DE DRESSAGE</th> 
+            </tr> 
+            <tr style="height: 100px;">
+                <td width="46%" style="border-top-color: transparent;">{{ meal.matS }}</td>
+                <td width="2%" style="border-top-color: transparent;"></td> 
+                <td width="52%" style="border-top-color: transparent;">{{ meal.matD }}</td> 
+            </tr>    
+        </table>   
+    </div>  
+</div>
+<div *ngIf="!meal" style="display: flex; justify-content: center; height: 50px;">
+    <label style="font-size: medium;">Une erreur est survenue</label>
+</div> 

@@ -35,15 +35,17 @@ export class MealService {
     this.mealsCollection.doc(meal.id).set(Object.assign({}, meal));
   }
 
-  jsonToMeal(json: any) : Meal {
-    console.log(json.stageList);
-    return new Meal( 
+  jsonToMeal(json: any) : Meal { 
+    var m = new Meal( 
       json.id,
       json.name,
       json.manager,
       json.category,
       json.nbGuests,
-      json.stageList ? json.stageList : []
-    )
+      json.stageList ? json.stageList : [],
+      json.matS,
+      json.matD
+    ) 
+    return m;
   }
 }

@@ -17,8 +17,8 @@
 .mat-column-name {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 40% !important;
-  width: 40% !important;
+  flex: 0 0 30% !important;
+  width: 30% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -33,8 +33,8 @@
 .mat-column-category {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 20% !important;
-  width: 20% !important;
+  flex: 0 0 25% !important;
+  width: 25% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -49,8 +49,8 @@
 .mat-column-manager {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 25% !important;
-  width: 25% !important;
+  flex: 0 0 20% !important;
+  width: 20% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -65,8 +65,8 @@
 .mat-column-nbguests {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 15% !important;
-  width: 15% !important;
+  flex: 0 0 20% !important;
+  width: 20% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -76,4 +76,4 @@
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
-} 
+}   

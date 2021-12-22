@@ -34,11 +34,16 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MealService } from './services/meal.service';
+import { MatMenuModule } from '@angular/material/menu'; 
+import { DownloadService } from './services/download.service';
+import { FichePDFComponent } from './components/fiche/fiche-pdf/fiche-pdf.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
   { path: 'stock', component: StockComponent },
   { path: 'acceuil', component: HomepageComponent },
+  { path: 'acceuil/download', component: FichePDFComponent },
   { path: '', component: HomepageComponent }
 ];
 
@@ -57,12 +62,14 @@ const appRoutes: Routes = [
     MatDialogModule,
     MatTabsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatMenuModule, 
+    MatExpansionModule
   ],
-  declarations: [AppComponent, SearchBarComponent, HomepageComponent, StageDeleteComponent, FicheComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent, StageDeleteComponent],
+  declarations: [AppComponent, SearchBarComponent, HomepageComponent, StageDeleteComponent, FicheComponent, FichePDFComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent, StageDeleteComponent, FichePDFComponent ],
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],
-  providers: [IngredientService, MealService]
+  providers: [IngredientService, MealService, DownloadService]
 })
 export class AppModule { }

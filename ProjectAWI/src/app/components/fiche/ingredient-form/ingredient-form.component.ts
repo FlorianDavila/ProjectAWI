@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'; 
-import { map } from '@firebase/util';
 import { Observable, tap } from 'rxjs';
 import { Ingredient } from 'src/app/models/Ingredient';
 import { IngredientService } from 'src/app/services/ingredient.service';
@@ -11,8 +10,7 @@ import { IngredientService } from 'src/app/services/ingredient.service';
 })
 export class IngredientFormComponent implements OnInit {   
   quantityInput: string; 
-  defaultOption: Ingredient = { id: 'ing', name: 'Ingrédients...',  unit: 'u.',isAllergern: false, category: "ic", price: 0, allergenCategory: null }
-  //ingredients: Ingredient[] = [this.defaultOption];
+  defaultOption: Ingredient = { id: 'ing', name: 'Ingrédients...',  unit: 'u.',isAllergern: false, category: "ic", price: 0, allergenCategory: null } 
   ingredients: Observable<Ingredient[]>;
   selectedIng = this.defaultOption;  
 
@@ -22,16 +20,11 @@ export class IngredientFormComponent implements OnInit {
     this.initIngredients();
   }
 
-  onKey(event: any) { // without type info
+  onKey(event: any) {
     this.quantityInput = event.target.value;
   }
 
-  initIngredients() {
-    // this.ingredients.push(
-    //   { id: 'steak-0', name: 'Steak', unit: 'L', isAllergern: false, category: "ic", price: 0, allergenCategory: null },
-    //   { id: 'pizza-1', name: 'Pizza', unit: 'kg', isAllergern: false, category: "ic", price: 0, allergenCategory: null },
-    //   { id: 'tacos-2', name: 'Tacos', unit: 'L', isAllergern: false, category: "ic", price: 0, allergenCategory: null },
-    // );
+  initIngredients() { 
     this.ingredients = this.ingredientService.ingredients;
     this.ingredients.pipe(tap(ings => {
       ings.unshift(this.defaultOption);
