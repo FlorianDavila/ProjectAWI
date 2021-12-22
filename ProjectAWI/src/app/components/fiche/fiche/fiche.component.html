@@ -78,26 +78,28 @@
           <mat-icon class="example-tab-icon" style="margin-right: 8px;">library_books</mat-icon>
           Etape existante
         </ng-template>
-        <mat-form-field appearance="fill" style="padding: 20px 20px 0px; width: 100%">
-          <mat-label>Etape</mat-label>
-          <mat-select [(ngModel)]="selectedExistingMeal" [formControl]="mealSelectedGroup">
-            <mat-option *ngFor="let existingMeal of mealService.meals | async" [value]="existingMeal">
-              <div *ngIf="existingMeal.name; else hasNoName" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; color: gray;">
-                <span style="color: black">{{ existingMeal.name }} </span>
-                <span>
-                  <span *ngIf="existingMeal.stageList.length > 0">(</span>
-                  <span *ngFor="let stage of existingMeal.stageList; let isLast = last">
-                    <div *ngIf="stage.name; then stageHasName else stageHasNoName"></div>
-                    <ng-template #stageHasName>{{ stage.name }}</ng-template>
-                    <ng-template #stageHasNoName>Sans titre</ng-template>
-                  <span *ngIf="!isLast">, </span></span><span *ngIf="existingMeal.stageList.length > 0">)</span> 
-                </span> 
-              </div> 
-              <ng-template #hasNoName>Aucune fiche technique enregistrée</ng-template> 
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <button mat-raised-button color="primary" style="margin-top:10px; margin: 0px 20px 20px;" class="r" (click)="onValidateExistingStage()">Valider cette étape existante</button> 
+        <form (ngSubmit)="onValidateExistingStage()">
+          <mat-form-field appearance="fill" style="padding: 20px 20px 0px; width: 100%">
+            <mat-label>Etape</mat-label>
+            <mat-select [(ngModel)]="selectedExistingMeal" [formControl]="mealSelectedGroup">
+              <mat-option *ngFor="let existingMeal of mealService.meals | async" [value]="existingMeal">
+                <div *ngIf="existingMeal.name; else hasNoName" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; color: gray;">
+                  <span style="color: black">{{ existingMeal.name }} </span>
+                  <span>
+                    <span *ngIf="existingMeal.stageList.length > 0">(</span>
+                    <span *ngFor="let stage of existingMeal.stageList; let isLast = last">
+                      <div *ngIf="stage.name; then stageHasName else stageHasNoName"></div>
+                      <ng-template #stageHasName>{{ stage.name }}</ng-template>
+                      <ng-template #stageHasNoName>Sans titre</ng-template>
+                    <span *ngIf="!isLast">, </span></span><span *ngIf="existingMeal.stageList.length > 0">)</span> 
+                  </span> 
+                </div> 
+                <ng-template #hasNoName>Aucune fiche technique enregistrée</ng-template> 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button color="primary" style="margin-top:10px; margin: 0px 20px 20px;" class="r" type="submit">Valider cette étape existante</button>  
+        </form>
       </mat-tab> 
     </mat-tab-group> 
     <hr/> 
