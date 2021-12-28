@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table'; 
-import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';  
 import { Meal } from 'src/app/models/Meal';
 import { DownloadService } from 'src/app/services/download.service';
 import { MealService } from 'src/app/services/meal.service'; 
@@ -17,6 +17,7 @@ export class SearchBarComponent implements OnInit {
   displayedColumns: string[] = ['name','category', 'manager','nbGuests', 'plus'];
   dataSource: MatTableDataSource<Meal>; 
   length: number;  
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private formBuilder: FormBuilder, public mealService: MealService, public downloadService: DownloadService) {
     this.searchGroup = this.formBuilder.group({
@@ -29,6 +30,7 @@ export class SearchBarComponent implements OnInit {
       this.dataSource = new MatTableDataSource(data);
       this.length = data.length;
     })
+    this.dataSource.paginator = this.paginator;
   }
 
   onSubmitForm() {
@@ -39,6 +41,10 @@ export class SearchBarComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    
+	  if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   } 
 
   onEtiquetteClicked(meal: Meal) { 
