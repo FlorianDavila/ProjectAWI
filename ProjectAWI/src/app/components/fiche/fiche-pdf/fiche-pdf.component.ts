@@ -1,9 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; 
-import { Ingredient } from 'src/app/models/Ingredient';
+import { ActivatedRoute } from '@angular/router';  
 import { Meal } from 'src/app/models/Meal'; 
-import { DownloadService } from 'src/app/services/download.service';
-import { MealService } from 'src/app/services/meal.service';
+import { DownloadService } from 'src/app/services/download.service'; 
 
 @Component({
   selector: 'app-fiche-pdf',

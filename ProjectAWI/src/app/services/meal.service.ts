@@ -3,7 +3,6 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'; 
 import { Meal } from '../models/Meal'; 
-import { Stage } from '../models/Stage'; 
 
 @Injectable({
   providedIn: 'root'

@@ -3,7 +3,7 @@
     <form class="form-inline item" [formGroup]="searchGroup" (ngSubmit)="onSubmitForm()">
       <mat-form-field class="marge" appearance="fill">
         <mat-label>Intitulé</mat-label>
-        <input #input matInput (keyup)="applyFilter($event)" type="text" type="search" placeholder="Search" formControlName="name" autocomplete="off"> 
+        <input #input matInput (keyup)="applyFilter($event)" type="text" type="search" placeholder="Search" formControlName="searchName" autocomplete="off"> 
       </mat-form-field>  
       <button mat-raised-button color="primary" style="margin-left: 10px;" type="submit"><mat-icon>search</mat-icon></button>
     </form>

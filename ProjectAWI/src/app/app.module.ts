@@ -36,8 +36,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MealService } from './services/meal.service';
 import { MatMenuModule } from '@angular/material/menu'; 
 import { DownloadService } from './services/download.service';
-import { FichePDFComponent } from './components/fiche/fiche-pdf/fiche-pdf.component';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { FichePDFComponent } from './components/fiche/fiche-pdf/fiche-pdf.component'; 
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
@@ -63,8 +62,7 @@ const appRoutes: Routes = [
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatMenuModule, 
-    MatExpansionModule
+    MatMenuModule 
   ],
   declarations: [AppComponent, SearchBarComponent, HomepageComponent, StageDeleteComponent, FicheComponent, FichePDFComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent, StageDeleteComponent, FichePDFComponent ],
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],

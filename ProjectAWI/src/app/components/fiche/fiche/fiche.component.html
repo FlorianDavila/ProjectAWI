@@ -1,39 +1,45 @@
-<div style="margin-top: 100px;" class="container">
-  <form [formGroup]="infoForm" (ngSubmit)="onSubmitForm()">  
-    <div style="display:flex; flex-direction: row; justify-content: center">
-      <mat-form-field class="marge" appearance="fill">
-        <mat-label>Intitulé</mat-label>
-        <input required matInput type="text" formControlName="name" autocomplete="off"> 
-      </mat-form-field>
-      <mat-form-field class="marge" appearance="fill">
-        <mat-label>Nb. couverts</mat-label>
-        <input required matInput type="text" formControlName="nbGuests" autocomplete="off"> 
-      </mat-form-field>
-      <mat-form-field class="marge" appearance="fill">
-        <mat-label>Responsable</mat-label>
-        <input required matInput type="text" formControlName="manager" autocomplete="off"> 
-      </mat-form-field>  
-      <mat-form-field class="marge" appearance="fill">
-        <mat-label>Catégorie</mat-label>
-        <mat-select required formControlName="category"> 
-          <mat-option value="Entrée">Entrée</mat-option>
-          <mat-option value="Plat">Plat</mat-option>
-          <mat-option value="Dessert">Dessert</mat-option>
-          <mat-option value="Accompagnement">Accompagnement</mat-option>
-        </mat-select>
-      </mat-form-field>  
-    </div> 
-    <div style="display: flex; justify-content: center;">
-        <mat-form-field class="marge" appearance="fill" style="width: 37%;">
-          <mat-label>Matériel spécifique</mat-label>
-          <textarea matInput type="text" style="height: 40px;" placeholder="Casseroles" formControlName="matS" autocomplete="off"></textarea>  
-        </mat-form-field>
-        <mat-form-field class="marge" appearance="fill" style="width: 37%;">
-          <mat-label>Matériel de dressage</mat-label>
-          <textarea matInput type="text" style="height: 40px;" placeholder="Couteaux" formControlName="matD" autocomplete="off"></textarea>  
-        </mat-form-field>
-    </div>   
-    <hr/>
+<div *ngIf="!firstStepOK" style="margin-top: 100px; text-align: center" class="container">
+  <h4>Création de la fiche technique</h4>
+  <form [formGroup]="infoForm" (ngSubmit)="onNext()">
+      <div style="display:flex; flex-direction: row; justify-content: center">
+          <mat-form-field class="marge" appearance="fill">
+          <mat-label>Intitulé</mat-label>
+          <input required matInput type="text" formControlName="name" autocomplete="off"> 
+          </mat-form-field>
+          <mat-form-field class="marge" appearance="fill">
+          <mat-label>Nb. couverts</mat-label>
+          <input required matInput type="number" formControlName="nbGuests" autocomplete="off"> 
+          </mat-form-field>
+          <mat-form-field class="marge" appearance="fill">
+          <mat-label>Responsable</mat-label>
+          <input required matInput type="text" formControlName="manager" autocomplete="off"> 
+          </mat-form-field>  
+          <mat-form-field class="marge" appearance="fill">
+          <mat-label>Catégorie</mat-label>
+          <mat-select required formControlName="category"> 
+              <mat-option value="Entrée">Entrée</mat-option>
+              <mat-option value="Plat">Plat</mat-option>
+              <mat-option value="Dessert">Dessert</mat-option>
+              <mat-option value="Accompagnement">Accompagnement</mat-option>
+          </mat-select>
+          </mat-form-field>  
+      </div> 
+      <div style="display:flex; flex-direction: row; justify-content: center;">
+          <mat-form-field class="marge" appearance="fill" style="width: 37%;">
+              <mat-label>Matériel spécifique</mat-label>
+              <textarea matInput type="text" style="height: 60px;" placeholder="Casseroles" formControlName="matS" autocomplete="off"></textarea>  
+          </mat-form-field>
+          <mat-form-field class="marge" appearance="fill" style="width: 37%;">
+              <mat-label>Matériel de dressage</mat-label>
+              <textarea matInput type="text" style="height: 60px;" placeholder="Couteaux" formControlName="matD" autocomplete="off"></textarea>  
+          </mat-form-field>
+      </div>    
+      <button mat-raised-button color="primary" style="margin-top:20px" type="submit">Suivant</button>
+  </form>
+</div>
+
+<div *ngIf="firstStepOK" style="margin-top: 100px;" class="container">
+  <form (ngSubmit)="onSubmitForm()">   
     <mat-tab-group mat-align-tabs="start" animationDuration="0ms">
       <mat-tab>
         <ng-template mat-tab-label>
@@ -78,26 +84,32 @@
           <mat-icon class="example-tab-icon" style="margin-right: 8px;">library_books</mat-icon>
           Etape existante
         </ng-template>
-        <form (ngSubmit)="onValidateExistingStage()">
-          <mat-form-field appearance="fill" style="padding: 20px 20px 0px; width: 100%">
-            <mat-label>Etape</mat-label>
-            <mat-select [(ngModel)]="selectedExistingMeal" [formControl]="mealSelectedGroup">
-              <mat-option *ngFor="let existingMeal of mealService.meals | async" [value]="existingMeal">
-                <div *ngIf="existingMeal.name; else hasNoName" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; color: gray;">
-                  <span style="color: black">{{ existingMeal.name }} </span>
-                  <span>
-                    <span *ngIf="existingMeal.stageList.length > 0">(</span>
-                    <span *ngFor="let stage of existingMeal.stageList; let isLast = last">
-                      <div *ngIf="stage.name; then stageHasName else stageHasNoName"></div>
-                      <ng-template #stageHasName>{{ stage.name }}</ng-template>
-                      <ng-template #stageHasNoName>Sans titre</ng-template>
-                    <span *ngIf="!isLast">, </span></span><span *ngIf="existingMeal.stageList.length > 0">)</span> 
-                  </span> 
-                </div> 
-                <ng-template #hasNoName>Aucune fiche technique enregistrée</ng-template> 
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <form [formGroup]="exMealGroup" (ngSubmit)="onValidateExistingStage()" style="padding: 40px 20px 0px">
+          <div style="overflow: auto">
+            <mat-form-field appearance="fill" style="width: 75%; margin-right: 30px;">
+              <mat-label>Etape</mat-label>
+              <mat-select [(ngModel)]="selectedExistingMeal" formControlName="mealSelectedGroup" (ngModelChange)="onChange($event)">
+                <mat-option *ngFor="let existingMeal of mealService.meals | async" [value]="existingMeal">
+                  <div *ngIf="existingMeal.name; else hasNoName" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; color: gray;">
+                    <span style="color: black">{{ existingMeal.name }} </span>
+                    <span>
+                      <span *ngIf="existingMeal.stageList.length > 0">(</span>
+                      <span *ngFor="let stage of existingMeal.stageList; let isLast = last">
+                        <div *ngIf="stage.name; then stageHasName else stageHasNoName"></div>
+                        <ng-template #stageHasName>{{ stage.name }}</ng-template>
+                        <ng-template #stageHasNoName>Sans titre</ng-template>
+                      <span *ngIf="!isLast">, </span></span><span *ngIf="existingMeal.stageList.length > 0">)</span> 
+                    </span> 
+                  </div> 
+                  <ng-template #hasNoName>Aucune fiche technique enregistrée</ng-template> 
+                </mat-option>
+              </mat-select>
+            </mat-form-field>  
+            <mat-form-field appearance="fill" style="width: auto">
+              <mat-label>Nb. Couverts</mat-label>
+              <input required matInput type="number" placeholder="8" formControlName="mealNbGuests" autocomplete="off">  
+            </mat-form-field>
+          </div>
           <button mat-raised-button color="primary" style="margin-top:10px; margin: 0px 20px 20px;" class="r" type="submit">Valider cette étape existante</button>  
         </form>
       </mat-tab> 

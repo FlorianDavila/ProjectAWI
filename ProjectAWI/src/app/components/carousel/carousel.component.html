@@ -7,17 +7,13 @@
     (slide)="onSlide($event)"
     class="item"
   >
-    <ng-template ngbSlide *ngFor="let img of images; index as i">
+    <ng-template ngbSlide *ngFor="let img of images | keyvalue; index as i">
       <div class="carousel-caption">
-        <h3>My slide {{ i + 1 }} title</h3>
+        <h3 style="text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;">{{ img.value[0] }}</h3>
       </div>
-      <a
-        href="https://www.google.fr/?q=Number+{{ i + 1 }}"
-        target="_blank"
-        rel="nofollow noopener noreferrer"
-      >
+      <a [href]="img.value[1]" target="_blank" rel="nofollow noopener noreferrer">
         <div class="picsum-img-wrapper">
-          <img [src]="img" alt="My image {{ i + 1 }} description" style="height: 100%;  width: 100%;"/>
+          <img [src]="img.key" [alt]="img.value[0]" style="height: 650px;  width: 100%; object-fit: cover;"/>
         </div>
       </a>
     </ng-template>
