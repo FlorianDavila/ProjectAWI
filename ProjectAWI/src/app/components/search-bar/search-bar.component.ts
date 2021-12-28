@@ -1,11 +1,10 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table'; 
 import { Router } from '@angular/router';
 import { Meal } from 'src/app/models/Meal';
 import { DownloadService } from 'src/app/services/download.service';
-import { MealService } from 'src/app/services/meal.service';
-import { FichePDFComponent } from '../fiche/fiche-pdf/fiche-pdf.component';
+import { MealService } from 'src/app/services/meal.service'; 
 
 @Component({
   selector: 'search-bar',
@@ -19,7 +18,7 @@ export class SearchBarComponent implements OnInit {
   dataSource: MatTableDataSource<Meal>; 
   length: number;  
 
-  constructor(private formBuilder: FormBuilder, public mealService: MealService, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, public downloadService: DownloadService) {
+  constructor(private formBuilder: FormBuilder, public mealService: MealService, public downloadService: DownloadService) {
     this.searchGroup = this.formBuilder.group({
       searchName: '',
     });

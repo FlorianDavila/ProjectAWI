@@ -35,7 +35,7 @@
             </tr>
             <!-- vvv - content - vvv --> 
             <tr *ngFor="let stage of meal.stageList; let index = index"> 
-                <td width="22%" style="padding: 4px 0px 50px 1%; border-top-color: transparent; border-bottom-color: transparent; text-align: start;">
+                <td width="22%" style="padding: 4px 1% 50px 1%; border-top-color: transparent; border-bottom-color: transparent; text-align: start;">
                     <div *ngFor="let ing of stage.ingredients">
                         {{ ing.name }}
                     </div>
@@ -52,7 +52,7 @@
                 </td>  
                 <td width="2%" class="midcol" style="padding: 0px; border-top-color: transparent;"></td> 
                 <td width="6%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;">{{ index + 1 }}</td>
-                <td width="40%" style="padding: 4px 0px 50px 1%; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent; text-align: start;"><u>{{ stage.name }}</u><br>{{ stage.description }}</td>  
+                <td width="40%" style="padding: 4px 1% 50px 1%; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent; text-align: start;"><u>{{ stage.name }}</u><br>{{ stage.description }}</td>  
                 <td width="6%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;">{{ stage.duration }}</td>  
             </tr>  
             <tr style="height: 100%">  

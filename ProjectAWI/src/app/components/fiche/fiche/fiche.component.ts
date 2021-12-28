@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, ComponentRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms'; 
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective } from '@angular/forms'; 
 import { Stage } from 'src/app/models/Stage';
 import { IngredientFormComponent } from '../ingredient-form/ingredient-form.component'; 
 import {CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'; 
@@ -7,7 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { StageDeleteComponent } from '../../../dialogs/stage-delete.component';  
 import { IngredientService } from 'src/app/services/ingredient.service';
 import { Meal } from 'src/app/models/Meal';
-import { MealService } from 'src/app/services/meal.service'; 
+import { MealService } from 'src/app/services/meal.service';  
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'fiche',
@@ -32,7 +33,13 @@ export class FicheComponent {
   target!: ViewContainerRef;
   private componentRef!: ComponentRef<any>;
 
-  constructor(private formBuilder: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver, public dialog: MatDialog, public ingredientService: IngredientService, public mealService: MealService) {
+  @ViewChild('fdStageForm', { read: FormGroupDirective })
+  fdStageForm!: FormGroupDirective;
+
+  @ViewChild('fdExMealGroup', { read: FormGroupDirective })
+  fdExMealGroup!: FormGroupDirective; 
+
+  constructor(private formBuilder: FormBuilder, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, public dialog: MatDialog, public ingredientService: IngredientService, public mealService: MealService) {
     this.stageForm = this.formBuilder.group({
       stageName: '',
       stageBody: '',
@@ -50,11 +57,8 @@ export class FicheComponent {
       mealSelectedGroup: new FormControl(),
       mealNbGuests: ''
     })
-    this.exMealGroup.controls['mealNbGuests'].disable()
+    this.exMealGroup.controls['mealNbGuests'].disable();
     this.listStages = new Array<Stage>()
-  }
-  
-  ngOnInit(): void {  
   } 
 
   onNext() {
@@ -72,22 +76,23 @@ export class FicheComponent {
     this.firstStepOK = true; 
   } 
 
-  onSubmitForm(): void {    
+  onSubmitForm(): void {  
     var stages: any[] = [];
     this.listStages.forEach(s => { 
-      var toPush = { name: s.name, ingredients: s.ingredients, description: s.description, duration: s.duration ? s.duration : "0\"" }
+      var toPush = { name: s.name, ingredients: s.ingredients, description: s.description, duration: s.duration ? s.duration : " " }
       stages.push(toPush);
     }); 
 
-    var m = this.meal;
-    var meal = new Meal(null, m.name, m.manager, m.category, m.nbGuests, stages, m.matS, m.matD);
-    console.log(meal)
-    this.mealService.addUpdateMeal(meal); 
+    this.meal.stageList = stages;
+    this.mealService.addUpdateMeal(this.meal); 
  
 
     this.infoForm.reset();
+    this.exMealGroup.reset();
     this.resetInputs()
     this.listStages = []
+
+    this.router.navigate(['../accueil/download'], { queryParams: { meal: JSON.stringify(this.meal) } });
   }
 
   addIngredientForm(): void {  
@@ -125,7 +130,7 @@ export class FicheComponent {
 
     var ret = false;
     var ingredients : {name: string, unit: string, quantity: string}[] = [];  
-    this.listIngredientsForm.forEach(element => { 
+    this.listIngredientsForm.forEach((element, index) => { 
       if (element.instance.quantityInput != undefined && element.instance.quantityInput != "" && element.instance.selectedIng.name != "Ingrédients...") {
         var i = {
           name: element.instance.selectedIng.name,
@@ -135,6 +140,7 @@ export class FicheComponent {
         ingredients.push(i);
       }  
       else {
+        if (index == this.listIngredientsForm.length - 1 && element.instance.selectedIng.name == "Ingrédients..." && (element.instance.quantityInput == undefined || element.instance.quantityInput == "")) return;
         this.displayErrorMessageI = true;
         ret = true;
       }
@@ -170,11 +176,12 @@ export class FicheComponent {
   resetInputs() { 
     this.target.clear(); 
     this.listIngredientsForm = [];  
-    this.stageForm.reset();   
-    this.stageForm.markAsUntouched();
 
-    this.exMealGroup.controls['mealSelectedGroup'].reset();
-    this.exMealGroup.controls['mealNbGuests'].reset();
+    this.fdStageForm.resetForm(); 
+    this.stageForm.reset(); 
+
+    this.fdExMealGroup.resetForm(); 
+    this.exMealGroup.reset();   
   }
 
   checkFields(name: string, body: string) : boolean{
@@ -220,5 +227,5 @@ export class FicheComponent {
       this.exMealGroup.controls['mealNbGuests'].enable();
       this.exMealGroup.controls['mealNbGuests'].setValue(+value.nbGuests);
     }
-  }
+  } 
 } 

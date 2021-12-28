@@ -34,15 +34,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MealService } from './services/meal.service';
-import { MatMenuModule } from '@angular/material/menu'; 
 import { DownloadService } from './services/download.service';
 import { FichePDFComponent } from './components/fiche/fiche-pdf/fiche-pdf.component'; 
+import { MatMenuModule } from '@angular/material/menu'; 
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
   { path: 'stock', component: StockComponent },
-  { path: 'acceuil', component: HomepageComponent },
-  { path: 'acceuil/download', component: FichePDFComponent },
+  { path: 'accueil', component: HomepageComponent },
+  { path: 'accueil/download', component: FichePDFComponent },
   { path: '', component: HomepageComponent }
 ];
 

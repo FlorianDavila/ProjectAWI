@@ -1,7 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';  
+import { ActivatedRoute, Router } from '@angular/router';  
 import { Meal } from 'src/app/models/Meal'; 
 import { DownloadService } from 'src/app/services/download.service'; 
+import { MealService } from 'src/app/services/meal.service';
 
 @Component({
   selector: 'app-fiche-pdf',
@@ -16,22 +17,14 @@ export class FichePDFComponent {
   meal: Meal;
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
 
-  constructor(private downloadService: DownloadService, private route: ActivatedRoute) {} 
+  constructor(private downloadService: DownloadService, private route: ActivatedRoute, private router : Router, private mealService: MealService) {} 
 
-  ngOnInit() {
+  ngOnInit() {   
     this.route.queryParams.subscribe(params => {  
       var json = JSON.parse(params['meal']); 
-      this.meal = new Meal( 
-        json.id,
-        json.name,
-        json.manager,
-        json.category,
-        json.nbGuests,
-        json.stageList ? json.stageList : [],
-        json.matS,
-        json.matD
-      );  
-    });  
+      this.meal = this.mealService.jsonToMeal(json);
+    });    
+    
   }
   
   public downloadAsPDF() {  
