@@ -1,0 +1,14 @@
+<div class="container" style="height: 200px; position: relative; width: 200px;">
+    <div style="margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
+        <form (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+            <mat-label>Code secret</mat-label>
+            <input required matInput type="text" [formControl]="secretCode" autocomplete="off"> 
+            <mat-error>
+                Code secret incorrect
+            </mat-error> 
+            </mat-form-field>
+            <button mat-raised-button color="primary" style="width: 100%; margin-top: 20px;" type="submit">Entrer</button>
+        </form> 
+    </div> 
+</div>

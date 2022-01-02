@@ -10,8 +10,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ModifcouvComponent } from './components/modifcouv/modifcouv.component';
 import { OptioncoutComponent } from './components/optioncout/optioncout.component';
-import { OptionetiqComponent } from './components/optionetiq/optionetiq.component';
-import { ParamComponent } from './components/param/param.component'; 
+import { OptionetiqComponent } from './components/optionetiq/optionetiq.component'; 
 import { SettingsComponent } from './components/settings/settings.component';
 import { StockComponent } from './components/stock/stock.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -29,14 +28,18 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';  
 import { MatDialogModule } from '@angular/material/dialog';
-import { StageDeleteComponent } from './dialogs/stage-delete.component';
+import { StageDeleteComponent } from './dialogs/stage-delete/stage-delete.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MealService } from './services/meal.service';
+import { MealService } from './services/meal.service'; 
+import { MatMenuModule } from '@angular/material/menu';
+import { ConfirmMealComponent } from './dialogs/confirm-meal/confirm-meal.component'; 
+import { FichePDFComponent } from './components/fiche/fiche-pdf/fiche-pdf.component';
 import { DownloadService } from './services/download.service';
-import { FichePDFComponent } from './components/fiche/fiche-pdf/fiche-pdf.component'; 
-import { MatMenuModule } from '@angular/material/menu'; 
+import { ParamComponent } from './components/param/param.component'; 
+import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
+import { AuthService } from './services/auth.service';
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
@@ -45,6 +48,13 @@ const appRoutes: Routes = [
   { path: 'accueil/download', component: FichePDFComponent },
   { path: '', component: HomepageComponent }
 ];
+// const appRoutes: Routes = [
+//   { path: 'fiches', canActivate: [AuthGuard], component: FicheComponent },
+//   { path: 'stock', canActivate: [AuthGuard], component: StockComponent },
+//   { path: 'accueil', canActivate: [AuthGuard], component: HomepageComponent },
+//   { path: 'accueil/download', canActivate: [AuthGuard], component: FichePDFComponent },
+//   { path: '', component: SignInPageComponent }
+// ];
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, NgbModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideFirestore(() => getFirestore()),
@@ -64,10 +74,10 @@ const appRoutes: Routes = [
     MatPaginatorModule,
     MatMenuModule 
   ],
-  declarations: [AppComponent, SearchBarComponent, HomepageComponent, StageDeleteComponent, FicheComponent, FichePDFComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent, StageDeleteComponent, FichePDFComponent ],
+  declarations: [AppComponent, SearchBarComponent, HomepageComponent, StageDeleteComponent, SignInPageComponent,FicheComponent, FichePDFComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent, StageDeleteComponent, FichePDFComponent, ConfirmMealComponent, SignInPageComponent ],
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],
-  providers: [IngredientService, MealService, DownloadService]
+  providers: [IngredientService, MealService, DownloadService, AuthService]
 })
 export class AppModule { }

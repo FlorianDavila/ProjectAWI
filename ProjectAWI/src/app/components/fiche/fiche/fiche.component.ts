@@ -4,11 +4,12 @@ import { Stage } from 'src/app/models/Stage';
 import { IngredientFormComponent } from '../ingredient-form/ingredient-form.component'; 
 import {CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'; 
 import { MatDialog } from '@angular/material/dialog';
-import { StageDeleteComponent } from '../../../dialogs/stage-delete.component';  
+import { StageDeleteComponent } from '../../../dialogs/stage-delete/stage-delete.component';  
 import { IngredientService } from 'src/app/services/ingredient.service';
 import { Meal } from 'src/app/models/Meal';
 import { MealService } from 'src/app/services/meal.service';  
 import { Router } from '@angular/router';
+import { ConfirmMealComponent } from 'src/app/dialogs/confirm-meal/confirm-meal.component';
 
 @Component({
   selector: 'fiche',
@@ -76,23 +77,30 @@ export class FicheComponent {
     this.firstStepOK = true; 
   } 
 
-  onSubmitForm(): void {  
-    var stages: any[] = [];
-    this.listStages.forEach(s => { 
-      var toPush = { name: s.name, ingredients: s.ingredients, description: s.description, duration: s.duration ? s.duration : " " }
-      stages.push(toPush);
-    }); 
+  onSubmitForm(): void {   
+    const dialogRef = this.dialog.open(ConfirmMealComponent); 
+    dialogRef.afterClosed().subscribe(result => {
+      var userResponse = result ? JSON.parse(result) : false;
+      if (userResponse) {  
 
-    this.meal.stageList = stages;
-    this.mealService.addUpdateMeal(this.meal); 
- 
+        var stages: any[] = [];
+        this.listStages.forEach(s => { 
+          var toPush = { name: s.name, ingredients: s.ingredients, description: s.description, duration: s.duration ? s.duration : " " }
+          stages.push(toPush);
+        }); 
 
-    this.infoForm.reset();
-    this.exMealGroup.reset();
-    this.resetInputs()
-    this.listStages = []
+        this.meal.stageList = stages;
+        this.mealService.addUpdateMeal(this.meal); 
+    
 
-    this.router.navigate(['../accueil/download'], { queryParams: { meal: JSON.stringify(this.meal) } });
+        this.infoForm.reset();
+        this.exMealGroup.reset();
+        this.resetInputs()
+        this.listStages = []
+
+        this.router.navigate(['../accueil/download'], { queryParams: { meal: JSON.stringify(this.meal) } });
+      }
+    });  
   }
 
   addIngredientForm(): void {  

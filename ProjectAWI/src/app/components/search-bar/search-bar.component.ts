@@ -17,6 +17,7 @@ export class SearchBarComponent implements OnInit {
   displayedColumns: string[] = ['name','category', 'manager','nbGuests', 'plus'];
   dataSource: MatTableDataSource<Meal>; 
   length: number;  
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private formBuilder: FormBuilder, public mealService: MealService, public downloadService: DownloadService) {
@@ -28,9 +29,9 @@ export class SearchBarComponent implements OnInit {
   ngOnInit() {
     this.mealService.getMeals().subscribe(data => { 
       this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
       this.length = data.length;
     })
-    this.dataSource.paginator = this.paginator;
   }
 
   onSubmitForm() {
