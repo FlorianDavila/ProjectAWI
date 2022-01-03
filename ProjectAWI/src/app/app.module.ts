@@ -37,8 +37,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ConfirmMealComponent } from './dialogs/confirm-meal/confirm-meal.component'; 
 import { FichePDFComponent } from './components/fiche/fiche-pdf/fiche-pdf.component';
 import { DownloadService } from './services/download.service';
-import { ParamComponent } from './components/param/param.component'; 
-import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
+import { ParamComponent } from './components/param/param.component';  
 import { AuthService } from './services/auth.service';
 
 const appRoutes: Routes = [
@@ -74,7 +73,7 @@ const appRoutes: Routes = [
     MatPaginatorModule,
     MatMenuModule 
   ],
-  declarations: [AppComponent, SearchBarComponent, HomepageComponent, StageDeleteComponent, SignInPageComponent,FicheComponent, FichePDFComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent, StageDeleteComponent, FichePDFComponent, ConfirmMealComponent, SignInPageComponent ],
+  declarations: [AppComponent, SearchBarComponent, HomepageComponent, StageDeleteComponent, FicheComponent, FichePDFComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent, StageDeleteComponent, FichePDFComponent, ConfirmMealComponent ],
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],
