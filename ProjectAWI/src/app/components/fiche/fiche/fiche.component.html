@@ -1,73 +1,83 @@
 
 <h2 style="text-align: center; margin-bottom: 50px; margin-top: 100px;">Création de la fiche technique</h2> 
-<div *ngIf="!firstStepOK" style="text-align: center" class="container">
+<div *ngIf="!firstStepOK" style="text-align: center;" class="container">
   <form [formGroup]="infoForm" (ngSubmit)="onNext()">
+    <div>
       <div style="display:flex; flex-direction: row; justify-content: center">
-          <mat-form-field class="marge" appearance="fill">
-            <mat-label>Intitulé</mat-label>
-            <input required matInput type="text" formControlName="name" autocomplete="off"> 
-            <mat-error>
-              Veuillez renseigner l'intitulé
-            </mat-error> 
-          </mat-form-field>
-          <mat-form-field class="marge" appearance="fill">
-            <mat-label>Nb. couverts</mat-label>
-            <input required matInput type="number" formControlName="nbGuests" autocomplete="off"> 
-            <mat-error>
-              Veuillez renseigner le nombre de couverts
-            </mat-error> 
-          </mat-form-field>
-          <mat-form-field class="marge" appearance="fill">
-            <mat-label>Responsable</mat-label>
-            <input required matInput type="text" formControlName="manager" autocomplete="off"> 
-            <mat-error>
-              Veuillez renseigner le responsable
-            </mat-error> 
-          </mat-form-field>  
-          <mat-form-field class="marge" appearance="fill">
-            <mat-label>Catégorie</mat-label>
-            <mat-select required formControlName="category"> 
-                <mat-option value="Entrée">Entrée</mat-option>
-                <mat-option value="Plat">Plat</mat-option>
-                <mat-option value="Dessert">Dessert</mat-option>
-                <mat-option value="Accompagnement">Accompagnement</mat-option>
-            </mat-select>
-            <mat-error>
-              Veuillez renseigner la catégorie
-            </mat-error> 
-          </mat-form-field>  
-      </div> 
+        <mat-form-field class="marge" appearance="fill">
+          <mat-label>Intitulé</mat-label>
+          <input required matInput type="text" formControlName="name" autocomplete="off"> 
+          <mat-error>
+            Veuillez renseigner l'intitulé
+          </mat-error> 
+        </mat-form-field>
+        <mat-form-field class="marge" appearance="fill">
+          <mat-label>Nb. couverts</mat-label>
+          <input required matInput type="number" formControlName="nbGuests" autocomplete="off"> 
+          <mat-error>
+            Veuillez renseigner le nombre de couverts
+          </mat-error> 
+        </mat-form-field>
+      </div>
+      <div style="display:flex; flex-direction: row; justify-content: center">
+        <mat-form-field class="marge" appearance="fill">
+          <mat-label>Responsable</mat-label>
+          <input required matInput type="text" formControlName="manager" autocomplete="off"> 
+          <mat-error>
+            Veuillez renseigner le responsable
+          </mat-error> 
+        </mat-form-field>  
+        <mat-form-field class="marge" appearance="fill">
+          <mat-label>Catégorie</mat-label>
+          <mat-select required formControlName="category"> 
+              <mat-option value="Entrée">Entrée</mat-option>
+              <mat-option value="Plat">Plat</mat-option>
+              <mat-option value="Dessert">Dessert</mat-option>
+              <mat-option value="Accompagnement">Accompagnement</mat-option>
+          </mat-select>
+          <mat-error>
+            Veuillez renseigner la catégorie
+          </mat-error> 
+        </mat-form-field>  
+      </div>  
+      <div style="margin: 40px 0px 40px; display:flex; flex-direction: row; justify-content: center;">
+        <hr style=" border: 0; clear:both; display:block; width: 32%; background-color:#ced4da; height: 1px;"/>
+      </div>
       <div style="display:flex; flex-direction: row; justify-content: center;">
-          <mat-form-field class="marge" appearance="fill" style="width: 37%;">
-              <mat-label>Matériel spécifique</mat-label>
-              <textarea matInput type="text" style="height: 60px;" placeholder="Casseroles" formControlName="matS" autocomplete="off"></textarea>  
-          </mat-form-field>
-          <mat-form-field class="marge" appearance="fill" style="width: 37%;">
-              <mat-label>Matériel de dressage</mat-label>
-              <textarea matInput type="text" style="height: 60px;" placeholder="Couteaux" formControlName="matD" autocomplete="off"></textarea>  
-          </mat-form-field>
+        <mat-form-field class="marge" appearance="fill">
+          <mat-label>Matériel spécifique</mat-label>
+          <textarea matInput type="text" style="height: 60px;" placeholder="Casseroles" formControlName="matS" autocomplete="off"></textarea>  
+        </mat-form-field>
+        <mat-form-field class="marge" appearance="fill">
+          <mat-label>Matériel de dressage</mat-label>
+          <textarea matInput type="text" style="height: 60px;" placeholder="Couteaux" formControlName="matD" autocomplete="off"></textarea>  
+        </mat-form-field>
+      </div>      
+      <div style="margin: 40px 0px 40px; display:flex; flex-direction: row; justify-content: center;">
+        <hr style=" border: 0; clear:both; display:block; width: 32%; background-color:#ced4da; height: 1px;"/>
+      </div>
+      <div style="display:flex; flex-direction: row; justify-content: center;">
+        <mat-form-field class="marge" appearance="fill">
+          <mat-label>Coef. d'une vente (avec charges)</mat-label>
+          <input matInput type="text" formControlName="coefVenteHT" autocomplete="off">  
+        </mat-form-field>
+        <mat-form-field class="marge" appearance="fill">
+          <mat-label>Coef. d'une vente (hors charges)</mat-label>
+          <input matInput type="text" formControlName="coefVenteTTC" autocomplete="off"> 
+        </mat-form-field>
       </div>    
       <div style="display:flex; flex-direction: row; justify-content: center;">
-        <mat-form-field class="marge" appearance="fill" style="width: 50%;">
-            <mat-label>Coefficient d'une vente (charges comprises)</mat-label>
-            <textarea matInput type="text" formControlName="coefVenteHT" autocomplete="off"></textarea>  
+        <mat-form-field class="marge" appearance="fill">
+          <mat-label>Coût Horaire Fluide (en €)</mat-label>
+          <input matInput type="text" formControlName="coutHFluide" autocomplete="off">  
         </mat-form-field>
-        <mat-form-field class="marge" appearance="fill" style="width: 50%;">
-            <mat-label>Coefficient d'une vente (charges non comprises)</mat-label>
-            <textarea matInput type="text" formControlName="coefVenteTTC" autocomplete="off"></textarea>  
-        </mat-form-field>
-      </div>    
-      <div style="display:flex; flex-direction: row; justify-content: center;">
-        <mat-form-field class="marge" appearance="fill" style="width: 50%;">
-            <mat-label>Coût Horaire Fluide (en €)</mat-label>
-            <textarea matInput type="text" formControlName="coutHFluide" autocomplete="off"></textarea>  
-        </mat-form-field>
-        <mat-form-field class="marge" appearance="fill" style="width: 50%;">
-            <mat-label>Coût Horaire Moyen (en €)</mat-label>
-            <textarea matInput type="text" formControlName="coutHMoyen" autocomplete="off"></textarea>  
+        <mat-form-field class="marge" appearance="fill">
+          <mat-label>Coût Horaire Moyen (en €)</mat-label>
+          <input matInput type="text" formControlName="coutHMoyen" autocomplete="off">  
         </mat-form-field>
       </div>    
-      <button mat-raised-button color="primary" style="margin-top:20px" type="submit">Suivant</button>
+      <button mat-raised-button color="primary" style="margin-top:40px" type="submit">Suivant</button>
+    </div>  
   </form>
 </div>
 
