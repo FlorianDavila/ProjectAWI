@@ -37,8 +37,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ConfirmMealComponent } from './dialogs/confirm-meal/confirm-meal.component'; 
 import { FichePDFComponent } from './components/fiche/fiche-pdf/fiche-pdf.component';
 import { DownloadService } from './services/download.service';
-import { ParamComponent } from './components/param/param.component';  
-import { AuthService } from './services/auth.service';
+import { ParamComponent } from './components/param/param.component';   
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
@@ -77,6 +76,6 @@ const appRoutes: Routes = [
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],
-  providers: [IngredientService, MealService, DownloadService, AuthService]
+  providers: [IngredientService, MealService, DownloadService ]
 })
 export class AppModule { }
