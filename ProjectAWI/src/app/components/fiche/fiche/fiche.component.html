@@ -47,6 +47,26 @@
               <textarea matInput type="text" style="height: 60px;" placeholder="Couteaux" formControlName="matD" autocomplete="off"></textarea>  
           </mat-form-field>
       </div>    
+      <div style="display:flex; flex-direction: row; justify-content: center;">
+        <mat-form-field class="marge" appearance="fill" style="width: 50%;">
+            <mat-label>Coefficient d'une vente (charges comprises)</mat-label>
+            <textarea matInput type="text" formControlName="coefVenteHT" autocomplete="off"></textarea>  
+        </mat-form-field>
+        <mat-form-field class="marge" appearance="fill" style="width: 50%;">
+            <mat-label>Coefficient d'une vente (charges non comprises)</mat-label>
+            <textarea matInput type="text" formControlName="coefVenteTTC" autocomplete="off"></textarea>  
+        </mat-form-field>
+      </div>    
+      <div style="display:flex; flex-direction: row; justify-content: center;">
+        <mat-form-field class="marge" appearance="fill" style="width: 50%;">
+            <mat-label>Coût Horaire Fluide (en €)</mat-label>
+            <textarea matInput type="text" formControlName="coutHFluide" autocomplete="off"></textarea>  
+        </mat-form-field>
+        <mat-form-field class="marge" appearance="fill" style="width: 50%;">
+            <mat-label>Coût Horaire Moyen (en €)</mat-label>
+            <textarea matInput type="text" formControlName="coutHMoyen" autocomplete="off"></textarea>  
+        </mat-form-field>
+      </div>    
       <button mat-raised-button color="primary" style="margin-top:20px" type="submit">Suivant</button>
   </form>
 </div>
