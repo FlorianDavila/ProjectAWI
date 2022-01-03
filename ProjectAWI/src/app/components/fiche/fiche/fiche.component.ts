@@ -52,7 +52,11 @@ export class FicheComponent {
       manager: '',
       category: 'Entrée',
       matS: '',
-      matD: ''
+      matD: '',
+      coefVenteHT: '',
+      coefVenteTTC: '',
+      coutHFluide: '',
+      coutHMoyen: ''
     }); 
     this.exMealGroup = this.formBuilder.group({
       mealSelectedGroup: new FormControl(),
