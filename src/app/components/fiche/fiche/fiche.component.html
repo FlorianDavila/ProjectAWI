@@ -13,9 +13,9 @@
         </mat-form-field>
         <mat-form-field class="marge" appearance="fill">
           <mat-label>Nb. couverts</mat-label>
-          <input required matInput type="number" formControlName="nbGuests" autocomplete="off"> 
+          <input required matInput type="number" min="0" formControlName="nbGuests" autocomplete="off"> 
           <mat-error>
-            Veuillez renseigner le nombre de couverts
+            Veuillez renseigner un nombre de couverts supérieur à 0
           </mat-error> 
         </mat-form-field>
       </div>
@@ -150,7 +150,7 @@
             </mat-form-field>  
             <mat-form-field appearance="fill" style="width: auto">
               <mat-label>Nb. Couverts</mat-label>
-              <input required matInput type="number" placeholder="8" formControlName="mealNbGuests" autocomplete="off">  
+              <input required matInput type="number" min="0" placeholder="8" formControlName="mealNbGuests" autocomplete="off">  
             </mat-form-field>
           </div>
           <button mat-raised-button color="primary" style="margin-top:10px; margin: 0px 20px 20px;" class="r" type="submit">Valider cette étape existante</button>  
