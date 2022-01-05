@@ -2,7 +2,7 @@ import { Component, ComponentFactoryResolver, ComponentRef, ViewChild, ViewConta
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective } from '@angular/forms'; 
 import { Stage } from 'src/app/models/Stage';
 import { IngredientFormComponent } from '../ingredient-form/ingredient-form.component'; 
-import {CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'; 
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'; 
 import { MatDialog } from '@angular/material/dialog';
 import { StageDeleteComponent } from '../../../dialogs/stage-delete/stage-delete.component';  
 import { IngredientService } from 'src/app/services/ingredient.service';

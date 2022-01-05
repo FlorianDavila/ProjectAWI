@@ -26,8 +26,9 @@
         <table table width="100%" class="min-height">
             <tr style="height: 20px;">
                 <th width="22%" class="title" style="padding: 0px;">DENREES</th>
-                <th width="12%" class="title" style="padding: 0px;">UNITES</th>
-                <th width="12%" class="title" style="padding: 0px;">QUANTITES</th>
+                <th width="8%" class="title" style="padding: 0px;">UNITES</th>
+                <th width="8%" class="title" style="padding: 0px;">PRIX</th>
+                <th width="8%" class="title" style="padding: 0px;">QUANTITES</th>
                 <th width="2%" class="midcol" style="padding: 0px; border-top-color: transparent;"></th> 
                 <th width="6%" class="title" style="border-left-color: transparent;">N°</th>
                 <th width="40%" class="title" style="border-left-color: transparent;">TECHNIQUES DE REALISATION</th>  
@@ -40,12 +41,17 @@
                         {{ ing.name }}
                     </div>
                 </td>
-                <td width="12%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">
+                <td width="8%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">
                     <div *ngFor="let ing of stage.ingredients">
                         {{ ing.unit }}
                     </div>
                 </td>
-                <td width="12%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">
+                <td width="8%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">
+                    <div *ngFor="let ing of stage.ingredients">
+                        ingredientService.getIngredientByName(ing.name).price | async ?? €
+                    </div>
+                </td>  
+                <td width="8%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">
                     <div *ngFor="let ing of stage.ingredients">
                         {{ ing.quantity }}
                     </div>
@@ -57,8 +63,9 @@
             </tr>  
             <tr style="height: 100%">  
                 <td width="22%" style="border-top-color: transparent; border-bottom-color: transparent; text-align: start;"></td>
-                <td width="12%" style="border-top-color: transparent; border-bottom-color: transparent;"></td>
-                <td width="12%" style="border-top-color: transparent; border-bottom-color: transparent;"></td>  
+                <td width="8%" style="border-top-color: transparent; border-bottom-color: transparent;"></td>
+                <td width="8%" style="border-top-color: transparent; border-bottom-color: transparent;"></td>  
+                <td width="8%" style="border-top-color: transparent; border-bottom-color: transparent;"></td>  
                 <td width="2%" class="midcol" style="border-top-color: transparent;"></td> 
                 <td width="6%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;"></td>
                 <td width="40%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;"></td>  
@@ -67,8 +74,9 @@
             <ng-template #empty>
                 <tr style="height: 100%">
                     <td width="22%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
-                    <td width="12%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
-                    <td width="12%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
+                    <td width="8%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
+                    <td width="8%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
+                    <td width="8%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
                     <td width="2%" class="midcol" style="padding: 0px; border-top-color: transparent;"></td> 
                     <td width="6%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent"></td>
                     <td width="40%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent"></td>  
@@ -91,12 +99,22 @@
         </table>  
         <table table width="100%">     
             <tr>
-                <th width="46%" class="title">COEFFICIENT DE VENTES</th> 
+                <th width="46%" class="title">COÛT HORRAIRE</th> 
                 <th width="2%" class="midcol" style="border-top-color: transparent;"></th> 
-                <th width="52%" class="title">COÛT HORRAIRE</th> 
+                <th width="52%" class="title">COEFFICIENT DE VENTES</th> 
             </tr> 
             <tr>
-                <td width="46%" style="border-top-color: transparent;">
+                <td width="46%" style="border-top-color: transparent; border-bottom-color: transparent">
+                    <span>
+                        <span *ngIf="meal.coutHFluide">Fluide : {{ meal.coutHFluide }} €</span>
+                        <span *ngIf="!meal.coutHFluide">Fluide : TO DO €</span>
+                        <br>
+                        <span *ngIf="meal.coutHMoyen">Moyen : {{ meal.coutHMoyen }} €</span>
+                        <span *ngIf="!meal.coutHMoyen">Moyen : TO DO €</span>  
+                    </span>
+                </td> 
+                <th width="2%" class="midcol" style="border-top-color: transparent; border-bottom-color: transparent"></th> 
+                <td width="52%" style="border-top-color: transparent; border-bottom-color: transparent">
                     <span>
                         <span *ngIf="meal.coefVenteHT">Avec charges : {{ meal.coefVenteHT }} €</span>
                         <span *ngIf="!meal.coefVenteHT">Avec charges : TO DO €</span>
@@ -105,14 +123,36 @@
                         <span *ngIf="!meal.coefVenteTTC">Sans charges : TO DO €</span> 
                     </span>
                 </td> 
+            </tr>    
+        </table>    
+        <table table width="100%">     
+            <tr>
+                <th width="46%" class="title">COÛT DE PRODUCTION</th> 
+                <th width="2%" class="midcol" style="border-top-color: transparent;"></th> 
+                <th width="52%" class="title">PRIX DE VENTE ET BENEFICES</th> 
+            </tr> 
+            <tr>
+                <td width="46%" style="border-top-color: transparent;">
+                    <span>
+                        <span>Coût matière : <span #coutTotalHT>200</span> € (dont 5% de coût assaisonnement)</span> 
+                        <br>
+                        <span>Coût des charges : <span #coutCharges>50</span> € (dont ... € personnel et ... € fluides)</span>  
+                        <br>
+                        <span>Coût total avec charges : <span #coutTotalTTC>{{ parseInt(coutTotalHT?.textContent) + parseInt(coutCharges?.textContent) | number }}</span> €</span> 
+                    </span>
+                </td> 
                 <th width="2%" style="border-top-color: transparent;"></th> 
                 <td width="52%" style="border-top-color: transparent;">
                     <span>
-                        <span *ngIf="meal.coutHFluide">Fluide : {{ meal.coutHFluide }} €</span>
-                        <span *ngIf="!meal.coutHFluide">Fluide : TO DO €</span>
+                        <span>Prix de vente sans charges : {{ parseInt(coutTotalHT?.textContent) * 1.2 | number }} €</span> 
                         <br>
-                        <span *ngIf="meal.coutHMoyen">Moyen : {{ meal.coutHMoyen }} €</span>
-                        <span *ngIf="!meal.coutHMoyen">Moyen : TO DO €</span>  
+                        <span>Prix de vente avec charges : <span #prixVenteTTC>{{ parseInt(coutTotalTTC?.textContent) * 1.2 | number }}</span> €</span> 
+                        <br>
+                        <span>Prix de vente TTC : {{ (parseInt(prixVenteTTC?.textContent) * 1.1) | number}} € (TVA : 10 %)</span> 
+                        <br>
+                        <span>Bénefice total : <span #benefTotal>{{ parseInt(prixVenteTTC?.textContent) - parseInt(coutTotalTTC?.textContent) | number }}</span> €  / Bénefice par portion : {{ parseInt(benefTotal?.textContent) / meal.nbGuests | number }} € </span> 
+                        <br>
+                        <span>Seuil de rentabilité : {{ findBreakEvenPoint(parseInt(prixVenteTTC?.textContent), parseInt(coutTotalTTC?.textContent)) | number }} portion(s)</span> 
                     </span>
                 </td> 
             </tr>    
