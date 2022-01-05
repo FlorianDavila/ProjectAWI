@@ -43,7 +43,11 @@ export class MealService {
       json.nbGuests,
       json.stageList ? json.stageList : [],
       json.matS,
-      json.matD
+      json.matD,
+      json.coefVenteHT,
+      json.coefVenteTTC,
+      json.coutHFluide,
+      json.coutHMoyen
     )  
   }
 }

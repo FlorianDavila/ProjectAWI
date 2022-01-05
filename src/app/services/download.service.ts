@@ -11,14 +11,14 @@ export class DownloadService {
   
   public downloadFile(toPrint: any, filename: string) {   
     html2canvas(toPrint).then(canvas => {
-      var imgWidth = 200; 
+      var imgWidth = 190; 
       var pageHeight = 295;  
       var imgHeight = canvas.height * imgWidth / canvas.width;
       var heightLeft = imgHeight;
-      var position = 10;
+      var position = 15;
       var imgData = canvas.toDataURL('application/pdf');
       const doc = new jsPDF("p", "mm", "a4");  
-      doc.addImage(imgData, 'PDF', 5, position, imgWidth, imgHeight);
+      doc.addImage(imgData, 'PDF', 10, position, imgWidth, imgHeight);
       
       heightLeft -= pageHeight;
 

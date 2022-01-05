@@ -6,3 +6,6 @@
     color: white;
 }
 
+.navbar-default .navbar-nav>li {
+    width: 100px;
+}

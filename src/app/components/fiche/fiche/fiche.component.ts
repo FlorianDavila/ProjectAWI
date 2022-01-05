@@ -74,10 +74,14 @@ export class FicheComponent {
     const category = formValue['category'];  
     const matS = formValue['matS']; 
     const matD = formValue['matD']; 
+    const coefVenteHT = formValue['coefVenteHT']; 
+    const coefVenteTTC = formValue['coefVenteTTC']; 
+    const coutHFluide = formValue['coutHFluide']; 
+    const coutHMoyen = formValue['coutHMoyen']; 
   
     if (!name ||!nbGuests || !manager || !category) return;
 
-    this.meal = new Meal(null, name, manager, category, nbGuests, [], matS, matD);
+    this.meal = new Meal(null, name, manager, category, nbGuests, [], matS, matD, coefVenteHT, coefVenteTTC, coutHFluide, coutHMoyen);
     this.firstStepOK = true; 
   } 
 

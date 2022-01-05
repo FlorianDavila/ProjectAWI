@@ -65,7 +65,7 @@
                 <td width="6%" style="border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;"></td>  
             </tr>
             <ng-template #empty>
-                <tr style="height: 1000px;">
+                <tr style="height: 100%">
                     <td width="22%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
                     <td width="12%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
                     <td width="12%" style="padding: 0px; border-top-color: transparent; border-bottom-color: transparent"></td>
@@ -84,11 +84,39 @@
                 <th width="52%" class="title">MATERIELS DE DRESSAGE</th> 
             </tr> 
             <tr style="height: 100px;">
-                <td width="46%" style="border-top-color: transparent;">{{ meal.matS }}</td>
-                <td width="2%" style="border-top-color: transparent;"></td> 
-                <td width="52%" style="border-top-color: transparent;">{{ meal.matD }}</td> 
+                <td width="46%" style="border-top-color: transparent; border-bottom-color: transparent">{{ meal.matS }}</td>
+                <td width="2%" class="midcol" style="border-top-color: transparent; border-bottom-color: transparent"></td> 
+                <td width="52%" style="border-top-color: transparent; border-bottom-color: transparent">{{ meal.matD }}</td> 
             </tr>    
-        </table>   
+        </table>  
+        <table table width="100%">     
+            <tr>
+                <th width="46%" class="title">COEFFICIENT DE VENTES</th> 
+                <th width="2%" class="midcol" style="border-top-color: transparent;"></th> 
+                <th width="52%" class="title">COÛT HORRAIRE</th> 
+            </tr> 
+            <tr>
+                <td width="46%" style="border-top-color: transparent;">
+                    <span>
+                        <span *ngIf="meal.coefVenteHT">Avec charges : {{ meal.coefVenteHT }} €</span>
+                        <span *ngIf="!meal.coefVenteHT">Avec charges : TO DO €</span>
+                        <br>
+                        <span *ngIf="meal.coefVenteTTC">Sans charges : {{ meal.coefVenteTTC }} €</span>
+                        <span *ngIf="!meal.coefVenteTTC">Sans charges : TO DO €</span> 
+                    </span>
+                </td> 
+                <th width="2%" style="border-top-color: transparent;"></th> 
+                <td width="52%" style="border-top-color: transparent;">
+                    <span>
+                        <span *ngIf="meal.coutHFluide">Fluide : {{ meal.coutHFluide }} €</span>
+                        <span *ngIf="!meal.coutHFluide">Fluide : TO DO €</span>
+                        <br>
+                        <span *ngIf="meal.coutHMoyen">Moyen : {{ meal.coutHMoyen }} €</span>
+                        <span *ngIf="!meal.coutHMoyen">Moyen : TO DO €</span>  
+                    </span>
+                </td> 
+            </tr>    
+        </table>    
     </div>  
 </div>
 <div *ngIf="!meal" style="display: flex; justify-content: center; height: 50px;">

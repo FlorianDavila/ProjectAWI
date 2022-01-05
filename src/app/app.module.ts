@@ -41,18 +41,10 @@ import { ParamComponent } from './components/param/param.component';
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
-  { path: 'stock', component: StockComponent },
-  { path: 'accueil', component: HomepageComponent },
-  { path: 'accueil/download', component: FichePDFComponent },
+  { path: 'stock', component: StockComponent }, 
+  { path: 'download', component: FichePDFComponent },
   { path: '', component: HomepageComponent }
-];
-// const appRoutes: Routes = [
-//   { path: 'fiches', canActivate: [AuthGuard], component: FicheComponent },
-//   { path: 'stock', canActivate: [AuthGuard], component: StockComponent },
-//   { path: 'accueil', canActivate: [AuthGuard], component: HomepageComponent },
-//   { path: 'accueil/download', canActivate: [AuthGuard], component: FichePDFComponent },
-//   { path: '', component: SignInPageComponent }
-// ];
+]; 
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, NgbModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideFirestore(() => getFirestore()),
