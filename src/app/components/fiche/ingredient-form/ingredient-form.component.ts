@@ -10,7 +10,7 @@ import { IngredientService } from 'src/app/services/ingredient.service';
 })
 export class IngredientFormComponent implements OnInit {   
   quantityInput: string; 
-  defaultOption: Ingredient = { id: 'ing', name: 'Ingrédients...',  unit: 'u.',isAllergern: false, category: "ic", price: 0, allergenCategory: null } 
+  defaultOption: Ingredient = { name: 'Ingrédients...', isAllergen: false, category: "ic", price: "0",  unit: 'u.', stock: 0, allergenCategory: null, id: 'ing' } 
   ingredients: Observable<Ingredient[]>;
   selectedIng = this.defaultOption;  
 

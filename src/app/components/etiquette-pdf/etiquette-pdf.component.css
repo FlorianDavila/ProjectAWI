@@ -1,0 +1,28 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td {
+    border: 1px solid #dddddd; 
+    vertical-align: text-top;
+}
+
+th {
+    border: 1px solid #dddddd; 
+    text-align: center;
+    padding: 6px 0px 6px;
+    word-break: break-all; 
+    overflow: auto;
+    vertical-align: text-top;
+} 
+
+.title {
+    background-color: lightgray; 
+    width: auto;
+}
+
+.lign{
+    display: inline;
+}

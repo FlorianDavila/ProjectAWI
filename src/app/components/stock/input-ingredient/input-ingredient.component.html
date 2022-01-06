@@ -1,0 +1,22 @@
+
+<div class='row'>
+    <mat-form-field style='margin-top: 10.5%;' appearance="outline">
+        <mat-label>Stock</mat-label>
+        <span matPrefix *ngIf="prefP"> {{ingredient.stock}} + &nbsp;</span> 
+        <span matPrefix *ngIf="prefN"> {{ingredient.stock}} - &nbsp; </span> 
+        <input style='margin-left: 10%;' matInput [formControl]="stockControl" placeholder="Ex. 50">
+    </mat-form-field> 
+
+    <div>
+        <button *ngIf="val" (click)="modifyP()" mat-raised-button class="add" color="primary">
+            <mat-icon >add_circle_outline</mat-icon></button>
+        <button *ngIf="val" (click)="modifyN()" mat-raised-button class="rem" color="primary">
+            <mat-icon>remove_circle_outline</mat-icon></button> 
+        <button style='margin-top: 65%;margin-left: 5%; border-radius: 10px;' *ngIf="modif" (click)="validate()" mat-raised-button color="primary">
+            <mat-icon>check_circle_outline</mat-icon></button>
+    </div>
+</div>
+
+
+    
+

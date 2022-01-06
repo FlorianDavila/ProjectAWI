@@ -1,0 +1,25 @@
+<div style="margin-top: 5%;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Sélectionnez un plat</mat-label>
+      <mat-select [formControl]="mealControl" required>
+        <mat-option> -- </mat-option>
+        <mat-option *ngFor="let meal of meals | async" [value]='meal'>
+          {{meal.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="mealControl.hasError('required')">Veuillez choisir un plat</mat-error>
+    </mat-form-field>
+
+    <div>
+        <mat-form-field appearance="fill" style="width:50%;">
+            <mat-label>Quantité vendue</mat-label>
+            <input [formControl]="numberControl" matInput placeholder="Ex. 8">
+            <mat-error *ngIf="numberControl.hasError('required')">Veuillez entrez un nombre</mat-error>
+          </mat-form-field>
+    </div>
+    
+    <div>
+        <button [disabled]="checkError()" mat-raised-button color="primary" (click)='sendVente()'>Valider la vente</button>
+    </div>
+
+  </div>

@@ -1,19 +1,21 @@
 export class Ingredient {
     id?: string;
     name: string;
-    isAllergern: boolean;
+    isAllergen: boolean;
     category: string;
-    price: number;
+    price: string;
     unit: string;
+    stock : number;
     allergenCategory: string | null;
     
-    public constructor(id: string, name: string, isAllergern: boolean, category: string, price: number, unit: string, allergenCategory?:string) {
-        this.id = id;
+    public constructor(name: string, isAllergern: boolean, category: string, price: string, unit: string, stock : number, allergenCategory?:string, id?: string) {
+        if (id) this.id = id;
         this.name = name;
-        this.isAllergern = isAllergern;
+        this.isAllergen = isAllergern;
         this.category = category;
         this.price = price;
         this.unit = unit;
+        this.stock = stock;
         if (allergenCategory) this.allergenCategory = allergenCategory;
     }
 }

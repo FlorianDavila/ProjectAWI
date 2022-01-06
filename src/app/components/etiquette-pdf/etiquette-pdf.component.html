@@ -1,0 +1,49 @@
+<div style="display: flex; justify-content: center; margin-top: 50px;">
+    <mat-form-field appearance="fill" style="width: 25%;">
+        <mat-label>Nombre d'étiquettes à imprimer</mat-label>
+        <input [formControl]="nbOfEtiq" matInput placeholder="Ex. 6">
+        <mat-error *ngIf="nbOfEtiq.hasError('required')">Veuillez entrez un nombre</mat-error>
+      </mat-form-field>
+</div>
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <mat-checkbox [formControl]="check" color='primary'>Cette impression d'étiquette(s) est à considérer comme une vente</mat-checkbox>
+</div>
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <button [disabled]="checkError()" mat-fab color="primary" (click)="downloadAsPDF()">
+        <mat-icon>cloud_download</mat-icon>
+    </button>
+</div>
+
+<div style="margin: 50px auto; width: 60%;"> 
+    <div id="pdfTable" #pdfTable *ngIf="meal">   
+        <table class="tg" table width="100%">   
+            <tr>
+                <th colspan="7" width="100%" class="textcenter title">{{meal.name}}</th>  
+            </tr>     
+        </table>   
+        
+        <table table width="100%" style="min-height: 100px;">
+            <tr style="height: 20px;">
+                <th class="title">Liste des ingrédients</th>  
+            </tr>
+
+            <!--- content ---> 
+                <tr *ngFor="let ing of ingredients" style="display: inline;"> 
+                    <td style='border-top-color: transparent; border-bottom-color : transparent; border-left: transparent; border-right: transparent;'>
+                           <span *ngIf="!ing.isAllergen">{{ ing.name }}. </span>
+                           <span *ngIf="ing.isAllergen"> <strong>{{ ing.name }}. </strong> </span>
+                    </td>
+                </tr> 
+            
+                <tr style="height: 20px;">
+                    <th class="title">FIN D'ETIQUETTE</th>  
+                </tr>
+        </table>    
+    </div>  
+</div>
+
+<div *ngIf="!meal" style="display: flex; justify-content: center; height: 50px;">
+    <label style="font-size: medium;">Une erreur est survenue</label>
+</div> 

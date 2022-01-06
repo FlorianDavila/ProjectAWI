@@ -1,0 +1,18 @@
+<div>
+    <h3 style='text-align: left;'>{{name}}</h3>
+    <div class='row'>
+        <mat-form-field appearance="outline">
+            <input matInput [formControl]="valueControl" class="form-control col-2" placeholder="{{value}}">
+            <mat-error *ngIf="valueControl.hasError('required')">Veuillez entrez un nombre</mat-error>
+        </mat-form-field>  
+        <div style='margin-left: 1%; margin-top: 6%;'>
+            <button *ngIf="val" type="button" (click)="modify()" mat-raised-button color="primary">
+                <mat-icon>edit</mat-icon></button>
+            <button *ngIf="modif" type="button" (click)="validate()" mat-raised-button color="primary">
+                <mat-icon>check_circle_outline</mat-icon></button>
+        </div>
+        
+    </div>
+    <hr style="width: 25%; margin-left: 10%;">
+    
+</div>  

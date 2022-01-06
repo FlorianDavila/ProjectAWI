@@ -115,7 +115,7 @@
               </mat-form-field> 
               <mat-form-field appearance="fill" class="fullResume" style="margin-top: 10px;">
                 <mat-label>Durée</mat-label>
-                <input matInput  type="text" placeholder="60 minutes" formControlName="stageDuration" autocomplete="off">  
+                <input matInput type="number" min="0" placeholder="60" formControlName="stageDuration" autocomplete="off">  
               </mat-form-field> 
               <button mat-raised-button color="primary" style="margin-top:10px;" class="r" type="submit">Valider cette nouvelle étape</button>
             </form>

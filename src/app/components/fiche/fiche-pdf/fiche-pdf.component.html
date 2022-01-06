@@ -47,8 +47,8 @@
                     </div>
                 </td>
                 <td width="8%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">
-                    <div *ngFor="let ing of stage.ingredients">
-                        ingredientService.getIngredientByName(ing.name).price | async ?? €
+                    <div *ngFor="let ing of stage.ingredients; let index = index">
+                        {{ ingredientsPrices[index] }}
                     </div>
                 </td>  
                 <td width="8%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">
@@ -59,7 +59,7 @@
                 <td width="2%" class="midcol" style="padding: 0px; border-top-color: transparent;"></td> 
                 <td width="6%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;">{{ index + 1 }}</td>
                 <td width="40%" style="padding: 4px 1% 50px 1%; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent; text-align: start;"><u>{{ stage.name }}</u><br>{{ stage.description }}</td>  
-                <td width="6%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;">{{ stage.duration }}</td>  
+                <td width="6%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-left-color: transparent; border-bottom-color: transparent;">{{ stage.duration }} "</td>  
             </tr>  
             <tr style="height: 100%">  
                 <td width="22%" style="border-top-color: transparent; border-bottom-color: transparent; text-align: start;"></td>
@@ -106,22 +106,38 @@
             <tr>
                 <td width="46%" style="border-top-color: transparent; border-bottom-color: transparent">
                     <span>
-                        <span *ngIf="meal.coutHFluide">Fluide : {{ meal.coutHFluide }} €</span>
-                        <span *ngIf="!meal.coutHFluide">Fluide : TO DO €</span>
+                        <span>Fluide : 
+                            <span #settings1>
+                                <span *ngIf="meal.coutHFluide">{{ meal.coutHFluide }}</span>
+                                <span *ngIf="!meal.coutHFluide">{{ settings[2]?.value | number }}</span>
+                            </span> €
+                        </span>
                         <br>
-                        <span *ngIf="meal.coutHMoyen">Moyen : {{ meal.coutHMoyen }} €</span>
-                        <span *ngIf="!meal.coutHMoyen">Moyen : TO DO €</span>  
+                        <span>Moyen : 
+                            <span #settings2>
+                                <span *ngIf="meal.coutHMoyen">{{ meal.coutHMoyen }}</span>
+                                <span *ngIf="!meal.coutHMoyen">{{ settings[3]?.value | number }}</span>
+                            </span> €
+                        </span> 
                     </span>
                 </td> 
                 <th width="2%" class="midcol" style="border-top-color: transparent; border-bottom-color: transparent"></th> 
                 <td width="52%" style="border-top-color: transparent; border-bottom-color: transparent">
                     <span>
-                        <span *ngIf="meal.coefVenteHT">Avec charges : {{ meal.coefVenteHT }} €</span>
-                        <span *ngIf="!meal.coefVenteHT">Avec charges : TO DO €</span>
+                        <span>Avec charges : 
+                            <span #settings3>
+                                <span *ngIf="meal.coefVenteHT">{{ meal.coefVenteHT }}</span>
+                                <span *ngIf="!meal.coefVenteHT">{{ settings[0]?.value | number }}</span>
+                            </span>
+                        </span>
                         <br>
-                        <span *ngIf="meal.coefVenteTTC">Sans charges : {{ meal.coefVenteTTC }} €</span>
-                        <span *ngIf="!meal.coefVenteTTC">Sans charges : TO DO €</span> 
-                    </span>
+                        <span>Sans charges : 
+                            <span #settings4>
+                                <span *ngIf="meal.coefVenteTTC">{{ meal.coefVenteTTC }}</span>
+                                <span *ngIf="!meal.coefVenteTTC">{{ settings[1]?.value | number }}</span>
+                            </span>
+                        </span> 
+                    </span> 
                 </td> 
             </tr>    
         </table>    
@@ -134,9 +150,9 @@
             <tr>
                 <td width="46%" style="border-top-color: transparent;">
                     <span>
-                        <span>Coût matière : <span #coutTotalHT>200</span> € (dont 5% de coût assaisonnement)</span> 
+                        <span>Coût matière : <span #coutTotalHT>{{ totalPrice * 1.05 | number }}</span> € (dont 5% de coût assaisonnement)</span> 
                         <br>
-                        <span>Coût des charges : <span #coutCharges>50</span> € (dont ... € personnel et ... € fluides)</span>  
+                        <span>Coût des charges : <span #fluide>{{ parseInt(settings1?.textContent) * totalDuration | number }}</span> € personnel et <span #moyen>{{ parseInt(settings2?.textContent) * totalDuration | number }}</span> € fluides (total : <span #coutCharges>{{ parseInt(fluide?.textContent) + parseInt(moyen?.textContent) | number }}</span> €)</span>  
                         <br>
                         <span>Coût total avec charges : <span #coutTotalTTC>{{ parseInt(coutTotalHT?.textContent) + parseInt(coutCharges?.textContent) | number }}</span> €</span> 
                     </span>
@@ -144,15 +160,15 @@
                 <th width="2%" style="border-top-color: transparent;"></th> 
                 <td width="52%" style="border-top-color: transparent;">
                     <span>
-                        <span>Prix de vente sans charges : {{ parseInt(coutTotalHT?.textContent) * 1.2 | number }} €</span> 
+                        <span>Prix de vente sans charges : {{ parseInt(coutTotalHT?.textContent) * parseInt(settings4?.textContent) | number }} €</span> 
                         <br>
-                        <span>Prix de vente avec charges : <span #prixVenteTTC>{{ parseInt(coutTotalTTC?.textContent) * 1.2 | number }}</span> €</span> 
-                        <br>
-                        <span>Prix de vente TTC : {{ (parseInt(prixVenteTTC?.textContent) * 1.1) | number}} € (TVA : 10 %)</span> 
+                        <span>Prix de vente avec charges : <span #prixVenteTTC>{{ parseInt(settings3?.textContent) * parseInt(coutTotalTTC?.textContent) | number }}</span> €</span> 
+                        <br>                      
+                        <span>Prix de vente TTC : {{ parseInt(prixVenteTTC?.textContent) * 1.1 | number }} € (TVA : 10 %)</span> 
                         <br>
                         <span>Bénefice total : <span #benefTotal>{{ parseInt(prixVenteTTC?.textContent) - parseInt(coutTotalTTC?.textContent) | number }}</span> €  / Bénefice par portion : {{ parseInt(benefTotal?.textContent) / meal.nbGuests | number }} € </span> 
                         <br>
-                        <span>Seuil de rentabilité : {{ findBreakEvenPoint(parseInt(prixVenteTTC?.textContent), parseInt(coutTotalTTC?.textContent)) | number }} portion(s)</span> 
+                        <!-- <span>Seuil de rentabilité : {{ findBreakEvenPoint(parseInt(coutTotalTTC?.textContent), meal.nbGuests) | number }} portion(s)</span> -->
                     </span>
                 </td> 
             </tr>    

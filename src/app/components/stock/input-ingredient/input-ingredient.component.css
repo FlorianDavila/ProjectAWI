@@ -1,0 +1,25 @@
+.add{
+    /*background-color: black;
+    color: white;*/
+    margin-top: 49%;
+    margin-right: 1%;
+    height: 26px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-style: solid;
+    border: 1px solid white;
+}
+
+
+.rem{
+    /*background-color: black;
+    color: white;*/
+    height: 26px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    vertical-align: 0;
+    border-style: solid;
+    border: 1px solid white;
+}

@@ -36,7 +36,7 @@
           </button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="onFicheClicked(actualMeal)" routerLinkActive="active" [queryParams]="{meal: helperPassData(actualMeal)}" routerLink="download">Fiche technique</button>
-            <button mat-menu-item (click)="onEtiquetteClicked(actualMeal)">Etiquette</button>
+            <button mat-menu-item (click)="onEtiquetteClicked(actualMeal)" routerLinkActive="active" [queryParams]="{meal: helperPassData(actualMeal)}" routerLink="etiquette">Etiquettes</button>
           </mat-menu>
         </td>
       </ng-container>
