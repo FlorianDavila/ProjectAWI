@@ -8,10 +8,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ModifcouvComponent } from './components/modifcouv/modifcouv.component';
-import { OptioncoutComponent } from './components/optioncout/optioncout.component';
-import { OptionetiqComponent } from './components/optionetiq/optionetiq.component'; 
-import { SettingsComponent } from './components/settings/settings.component';
 import { StockComponent } from './components/stock/stock.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -37,7 +33,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ConfirmMealComponent } from './dialogs/confirm-meal/confirm-meal.component'; 
 import { FichePDFComponent } from './components/fiche/fiche-pdf/fiche-pdf.component';
 import { DownloadService } from './services/download.service';
-import { ParamComponent } from './components/param/param.component';   
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
@@ -64,7 +59,7 @@ const appRoutes: Routes = [
     MatPaginatorModule,
     MatMenuModule 
   ],
-  declarations: [AppComponent, SearchBarComponent, HomepageComponent, StageDeleteComponent, FicheComponent, FichePDFComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, ModifcouvComponent, OptioncoutComponent, OptionetiqComponent, ParamComponent, SettingsComponent, StockComponent, HomepageComponent, StageDeleteComponent, FichePDFComponent, ConfirmMealComponent ],
+  declarations: [AppComponent, SearchBarComponent, HomepageComponent, StageDeleteComponent, FicheComponent, FichePDFComponent, IngredientFormComponent, CarouselComponent, NavbarComponent, StockComponent, HomepageComponent, StageDeleteComponent, FichePDFComponent, ConfirmMealComponent ],
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],
