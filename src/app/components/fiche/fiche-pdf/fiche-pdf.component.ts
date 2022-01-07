@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core'; 
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';  
 import { Meal } from 'src/app/models/Meal'; 
 import { Settings } from 'src/app/models/settings';
@@ -22,6 +23,7 @@ export class FichePDFComponent {
   settings: Settings[] = [];
   totalPrice: number = 0;
   totalDuration: number = 0;
+  check : FormControl;
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
   
   @ViewChild('prixVenteTTC', { read: HTMLSpanElement })
@@ -30,6 +32,7 @@ export class FichePDFComponent {
   constructor(private downloadService: DownloadService, public settingsService: SettingsService, public ingredientService: IngredientService, private route: ActivatedRoute, private router : Router, private mealService: MealService) {} 
 
   ngOnInit() {   
+    this.check = new FormControl('');
     this.route.queryParams.subscribe(params => {  
       var json = JSON.parse(params['meal']); 
       this.meal = this.mealService.jsonToMeal(json);

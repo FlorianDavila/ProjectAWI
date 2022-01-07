@@ -2,6 +2,7 @@
     <button mat-fab color="primary" (click)="downloadAsPDF()">
         <mat-icon>cloud_download</mat-icon>
     </button>
+    <mat-checkbox style="margin-top: 20px;" [formControl]="check" color='primary'>Inclure les coûts dans la fiche technique</mat-checkbox>
 </div> 
 <div style="margin: 50px auto; width: 60%;"> 
     <div id="pdfTable" #pdfTable *ngIf="meal">   
@@ -97,7 +98,7 @@
                 <td width="52%" style="border-top-color: transparent; border-bottom-color: transparent">{{ meal.matD }}</td> 
             </tr>    
         </table>  
-        <table table width="100%">     
+        <table *ngIf="check.value" table width="100%">     
             <tr>
                 <th width="46%" class="title">COÛT HORRAIRE</th> 
                 <th width="2%" class="midcol" style="border-top-color: transparent;"></th> 
