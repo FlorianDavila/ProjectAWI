@@ -26,8 +26,8 @@ export class FichePDFComponent {
   check : FormControl;
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
   
-  @ViewChild('prixVenteTTC', { read: HTMLSpanElement })
-  prixVenteTTC!: HTMLSpanElement;
+  @ViewChild('prixVenteTTC') prixVenteTTC: ElementRef;
+
 
   constructor(private downloadService: DownloadService, public settingsService: SettingsService, public ingredientService: IngredientService, private route: ActivatedRoute, private router : Router, private mealService: MealService) {} 
 
@@ -62,7 +62,7 @@ export class FichePDFComponent {
   public findBreakEvenPoint(coutProd: any, nbGuests: any) {
     var breakEvenPoint = 0;
     var nbPortions = 0;  
-    var prixVenteIndiv = +this.prixVenteTTC.textContent! / +nbGuests;
+    var prixVenteIndiv = +this.prixVenteTTC.nativeElement.firstElementChild.innerHTML! / +nbGuests;
     while (breakEvenPoint < coutProd) {
       breakEvenPoint += prixVenteIndiv;
       nbPortions++;
