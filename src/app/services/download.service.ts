@@ -25,7 +25,7 @@ export class DownloadService {
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         doc.addPage();
-        doc.addImage(imgData, 'PDF', 5, position, imgWidth, imgHeight);
+        doc.addImage(imgData, 'PDF', 10, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
       doc.save(filename)

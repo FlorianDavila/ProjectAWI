@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { AppComponent } from './app.component';
@@ -45,6 +45,9 @@ import { ConfirmVenteComponent } from './dialogs/confirm-vente/confirm-vente.com
 import { EtiquettePdfComponent } from './components/etiquette-pdf/etiquette-pdf.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DownloadService } from './services/download.service';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
 
 const appRoutes: Routes = [
   { path: 'fiches', component: FicheComponent },
@@ -85,7 +88,12 @@ const appRoutes: Routes = [
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],
-  providers: [IngredientService, HttpClient, HttpClientModule, DownloadService,  MealService,
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000}},],
+  providers: [ IngredientService, HttpClient, HttpClientModule, DownloadService,  MealService,
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3000}},
+    {
+      provide: LOCALE_ID,
+      useValue: 'fr-FR'
+    },
+  ],
 })
 export class AppModule { }
