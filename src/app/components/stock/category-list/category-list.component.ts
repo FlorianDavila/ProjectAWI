@@ -5,7 +5,6 @@ import { FormControl } from '@angular/forms';
 import { Observable, timeout } from 'rxjs';
 import { Ingredient } from 'src/app/models/Ingredient';
 import { IngredientService } from 'src/app/services/ingredient.service';
-import {MatSort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 
@@ -31,7 +30,6 @@ export class CategoryListComponent implements OnInit {
   expandedElement: Ingredient | null;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(public ingServ : IngredientService) { }
 
@@ -39,7 +37,6 @@ export class CategoryListComponent implements OnInit {
     this.ingServ.getIngredientByCategory(this.category).subscribe( data => {
       this.dataSource = new MatTableDataSource<Ingredient>(data);
       this.dataSource.paginator=this.paginator;
-      this.dataSource.sort = this.sort;
     }); 
   }
 
