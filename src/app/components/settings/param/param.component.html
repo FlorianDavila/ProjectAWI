@@ -1,8 +1,15 @@
 <div>
     <h3 style='text-align: left;'>{{name}}</h3>
     <div class='row' style="margin-left: 1%;">
-            <input matInput [formControl]="valueControl" class="form-control col-2" placeholder="{{value}}">
-        <div style="margin-left: 5%;">
+        <div style="width: 20%;">
+            <form >
+                <mat-form-field appearance="fill" style="width: 80%;">
+                    <input matInput [formControl]="valueControl" placeholder="{{value}}">
+                </mat-form-field>
+            </form>
+        </div>
+        
+        <div style="margin-top: 2.5%; margin-left: 5%;">
             <button *ngIf="val" type="button" (click)="modify()" mat-raised-button color="primary">
                 <mat-icon>edit</mat-icon></button>
             <button *ngIf="modif" type="button" (click)="validate()" mat-raised-button color="primary">
