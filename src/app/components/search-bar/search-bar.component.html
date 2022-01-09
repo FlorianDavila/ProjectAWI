@@ -38,6 +38,7 @@
             <button mat-menu-item routerLinkActive="active" [queryParams]="{meal: helperPassData(actualMeal)}" routerLink="download">Fiche technique</button>
             <button mat-menu-item routerLinkActive="active" [queryParams]="{meal: helperPassData(actualMeal)}" routerLink="etiquette">Etiquettes</button>
             <button mat-menu-item (click)="changeCouv(actualMeal)">Modifier le nombre de couverts</button>
+            <button mat-menu-item (click)="declaVente(actualMeal)">Déclarer une vente</button>
           </mat-menu>
         </td>
       </ng-container>

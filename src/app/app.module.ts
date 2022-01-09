@@ -29,7 +29,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { StageDeleteComponent } from './dialogs/stage-delete/stage-delete.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { DeclaVenteComponent } from './components/stock/decla-vente/decla-vente.component';
 import {MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material/snack-bar';
 import { CategoryListComponent } from './components/stock/category-list/category-list.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
@@ -48,6 +47,7 @@ import { DownloadService } from './services/download.service';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { ChangeCouvComponent } from './dialogs/change-couv/change-couv.component';
+import { VenteComponent } from './dialogs/vente/vente.component';
 registerLocaleData(localeFr);
 
 const appRoutes: Routes = [
@@ -84,8 +84,8 @@ const appRoutes: Routes = [
   declarations: [AppComponent, SearchBarComponent, HomepageComponent, 
      FicheComponent,FichePDFComponent, StageDeleteComponent,
      IngredientFormComponent, CarouselComponent, NavbarComponent, ParamComponent, SettingsComponent, 
-     StockComponent, HomepageComponent, DeclaVenteComponent, CategoryListComponent, 
-     InputIngredientComponent, ConfirmVenteComponent, EtiquettePdfComponent,  ConfirmMealComponent, ChangeCouvComponent],
+     StockComponent, HomepageComponent, CategoryListComponent, 
+     InputIngredientComponent, ConfirmVenteComponent, EtiquettePdfComponent,  ConfirmMealComponent, ChangeCouvComponent, VenteComponent],
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],

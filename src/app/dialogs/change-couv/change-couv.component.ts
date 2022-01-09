@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Meal } from 'src/app/models/Meal';
 import { Stage } from 'src/app/models/Stage';
 import { MealService } from 'src/app/services/meal.service';
@@ -22,13 +23,15 @@ export class ChangeCouvComponent implements OnInit {
   }
 
   submit() : void {
-    this.actualMeal.stageList.forEach(element => {
-      element.ingredients.forEach((ing: any) => {
-        ing.quantity = ing.quantity * this.nbCouv.value / this.actualMeal.nbGuests;
+    if(this.nbCouv.value > 0) {
+      this.actualMeal.stageList.forEach(element => {
+        element.ingredients.forEach((ing: any) => {
+          ing.quantity = ing.quantity * this.nbCouv.value / this.actualMeal.nbGuests;
+        });
       });
-    });
-    this.actualMeal.nbGuests = this.nbCouv.value
-    this.mealService.addUpdateMeal(this.actualMeal)   
+      this.actualMeal.nbGuests = this.nbCouv.value
+      this.mealService.addUpdateMeal(this.actualMeal)  
+    }
   }
 
   checkError() : boolean {

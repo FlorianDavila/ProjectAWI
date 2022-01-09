@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';  
 import { ChangeCouvComponent } from 'src/app/dialogs/change-couv/change-couv.component';
+import { VenteComponent } from 'src/app/dialogs/vente/vente.component';
 import { Meal } from 'src/app/models/Meal';
 import { DownloadService } from 'src/app/services/download.service';
 import { MealService } from 'src/app/services/meal.service'; 
@@ -61,6 +62,20 @@ export class SearchBarComponent implements OnInit {
       var userResponse = result ? JSON.parse(result) : false;
       if (userResponse) {
         this.openSnackBar("Modification effectuée", "Fermer"); 
+      }
+    });
+  }
+
+  declaVente(mealSelected : Meal) {
+    const dialogRef = this.dialog.open(VenteComponent, {
+      data :{
+        meal : mealSelected
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      var userResponse = result ? JSON.parse(result) : false;
+      if (userResponse) {
+        this.openSnackBar("Vente déclarée avec succès", "Fermer"); 
       }
     });
   }
