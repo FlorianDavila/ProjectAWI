@@ -1,0 +1,19 @@
+<h3 mat-dialog-title>Modification du nombre de couverts de <strong>{{actualMeal.name}}</strong></h3>
+<mat-dialog-content class="mat-typography">
+  <form class="columns">
+    <mat-form-field appearance="fill">
+      <mat-label>Valeur actuelle</mat-label>
+      <input matInput value="{{actualMeal.nbGuests}}" [disabled]=true>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Nouvelle valeur</mat-label>
+        <input matInput type="number" [formControl]="nbCouv" placeholder="Ex 8">
+        <mat-error *ngIf="nbCouv.hasError('required')"> Une valeur est <strong>requise</strong> 
+        </mat-error>
+      </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Annuler</button>
+  <button [disabled]="checkError()" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="submit()">Confirmer</button>
+</mat-dialog-actions>

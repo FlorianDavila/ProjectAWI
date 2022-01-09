@@ -9,9 +9,6 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class ConfirmVenteComponent implements OnInit {
 
-  realMeal : Meal;
-  realNumber :number;
-
   constructor(@Inject(MAT_DIALOG_DATA) public data: {meal: Meal, number : number}) {}
 
   ngOnInit(): void {

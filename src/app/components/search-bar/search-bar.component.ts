@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';  
+import { ChangeCouvComponent } from 'src/app/dialogs/change-couv/change-couv.component';
 import { Meal } from 'src/app/models/Meal';
 import { DownloadService } from 'src/app/services/download.service';
 import { MealService } from 'src/app/services/meal.service'; 
@@ -20,7 +23,7 @@ export class SearchBarComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private formBuilder: FormBuilder, public mealService: MealService, public downloadService: DownloadService) {
+  constructor(private formBuilder: FormBuilder, public mealService: MealService, public downloadService: DownloadService, public dialog : MatDialog, public _snackBar: MatSnackBar) {
     this.searchGroup = this.formBuilder.group({
       searchName: '',
     });
@@ -48,16 +51,24 @@ export class SearchBarComponent implements OnInit {
     }
   } 
 
-  onEtiquetteClicked(meal: Meal) { 
-    console.log(meal.name);
+  changeCouv(mealSelected : Meal) {
+    const dialogRef = this.dialog.open(ChangeCouvComponent, {
+      data :{
+        meal : mealSelected
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      var userResponse = result ? JSON.parse(result) : false;
+      if (userResponse) {
+        this.openSnackBar("Modification effectuée", "Fermer"); 
+      }
+    });
   }
 
-  onFicheClicked(meal: Meal) { 
-    // var comp = new FichePDFComponent(this.downloadService)
-    // this.downloadService.downloadFile(
-    //   comp.pdfTable,
-    //   `${(meal.name).replace(" ","-").toLowerCase()}-fiche-technique.pdf`
-    // ) 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+        verticalPosition: 'top',
+      });
   }
 
   helperPassData(meal: Meal) : string {

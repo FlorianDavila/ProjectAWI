@@ -47,6 +47,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DownloadService } from './services/download.service';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { ChangeCouvComponent } from './dialogs/change-couv/change-couv.component';
 registerLocaleData(localeFr);
 
 const appRoutes: Routes = [
@@ -84,7 +85,7 @@ const appRoutes: Routes = [
      FicheComponent,FichePDFComponent, StageDeleteComponent,
      IngredientFormComponent, CarouselComponent, NavbarComponent, ParamComponent, SettingsComponent, 
      StockComponent, HomepageComponent, DeclaVenteComponent, CategoryListComponent, 
-     InputIngredientComponent, ConfirmVenteComponent, EtiquettePdfComponent,  ConfirmMealComponent],
+     InputIngredientComponent, ConfirmVenteComponent, EtiquettePdfComponent,  ConfirmMealComponent, ChangeCouvComponent],
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],
