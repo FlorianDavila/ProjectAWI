@@ -56,6 +56,11 @@ export class IngredientService {
     );
   }
 
+  deleteIngredient(ing: Ingredient) {
+    this.projetawiStore.doc<Ingredient>(this.path+ing.id).delete();
+  }
+
+
   getIngredientByName(name : String) : Observable<Ingredient[]>{
     this.ingredientCatColl = this.db.collection(this.path, ref => ref.where("name", "==", name));
     return this.ingredientCatColl

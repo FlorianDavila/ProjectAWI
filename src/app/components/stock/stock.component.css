@@ -1,0 +1,25 @@
+.addIng{
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: repeat(1, 0.5fr);
+    justify-content: center;
+    padding-left: 30%;
+    padding-right: 30%;
+}
+
+.formAdd{
+    margin-top: 2%;
+    display: grid;
+    grid-template-columns: repeat(2, 0.5fr);
+    align-items: center;
+    margin-left: 39%;
+}
+
+.confirmButtons{
+    margin-top: 1%;
+    margin-left: 39%;
+}
+
+.form{
+    margin-right: 2%;
+}

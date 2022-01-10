@@ -51,7 +51,8 @@
                 </td>
                 <td width="8%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">
                     <div *ngFor="let ing of stage.ingredients; let index = index">
-                        {{ ingredientsPrices[index] | currency:'EUR':'symbol':undefined:'fr-FR' }}
+                        <span *ngIf="ingredientsPrices[index] != null"> {{ ingredientsPrices[index] | currency:'EUR':'symbol':undefined:'fr-FR' }} </span>
+                        <span *ngIf="ingredientsPrices[index] == null"> - </span>
                     </div>
                 </td>  
                 <td width="8%" style="padding: 4px 0px 50px 0px; border-top-color: transparent; border-bottom-color: transparent;">

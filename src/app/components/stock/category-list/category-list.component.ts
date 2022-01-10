@@ -7,6 +7,9 @@ import { Ingredient } from 'src/app/models/Ingredient';
 import { IngredientService } from 'src/app/services/ingredient.service';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
+import { DeleteIngredientComponent } from 'src/app/dialogs/delete-ingredient/delete-ingredient.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-category-list',
@@ -27,18 +30,29 @@ export class CategoryListComponent implements OnInit {
   @Input() public category : String;
   panelOpenState = false;
   dataSource : MatTableDataSource<Ingredient>;
-  columnsToDisplay = ['name','stock','unit','price','isAllergen', 'allergenCat'];
+  columnsToDisplay = ['name','stock','unit','price','isAllergen', 'allergenCat','plus'];
   expandedElement: Ingredient | null;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public ingServ : IngredientService) { }
+  constructor(public ingServ : IngredientService,public dialog : MatDialog, public _snackBar : MatSnackBar) { }
 
   ngOnInit(): void {
     this.ingServ.getIngredientByCategory(this.category).subscribe( data => {
       this.dataSource = new MatTableDataSource<Ingredient>(data);
       this.dataSource.paginator=this.paginator;
     }); 
+  }
+
+  deleteIng(selectedIng : Ingredient) {
+    const dialogRef = this.dialog.open(DeleteIngredientComponent, {});
+    dialogRef.afterClosed().subscribe(result => {
+      var userResponse = result ? JSON.parse(result) : false;
+      if (userResponse) {
+      this.ingServ.deleteIngredient(selectedIng);
+      this.openSnackBar("Ingrédient correctement supprimé", "Fermer");
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -48,5 +62,11 @@ export class CategoryListComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      verticalPosition : 'top'
+    });
   }
 }

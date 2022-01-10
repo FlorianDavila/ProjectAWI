@@ -20,3 +20,74 @@
     </mat-tab>
   </mat-tab-group>
 </div>
+ 
+<div class="addIng">
+  <button (click)="addIng()" mat-stroked-button color="primary" [disabled]="checkIsClicked()">Ajouter un ingrédient</button>
+</div>
+
+<div *ngIf='isClicked' class="formAdd">
+  <form>
+    <mat-form-field appearance="fill"  class='form'>
+      <mat-label>Nom</mat-label>
+      <input matInput [formControl]="name" required placeholder="Ex. Délicieuse glace">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class='form'>
+      <mat-label>Stock</mat-label>
+      <input matInput [formControl]="stock" required type="number" placeholder="Ex. 20">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  class='form'>
+      <mat-label>Unité</mat-label>
+      <input matInput [formControl]="unit" required placeholder="Ex. Kg">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  class='form'>
+      <mat-label>Prix unitaire</mat-label>
+      <input matInput [formControl]="price" required type="number" placeholder="Ex. 12.2">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  class='form'>
+      <mat-label>Catégorie</mat-label>
+      <mat-select [formControl]="cat" required>
+        <mat-option value="Viandes et Volailles">
+          Viandes et Volailles
+        </mat-option>
+        <mat-option value="Poissons et Crustaces">
+          Poissons et Crustaces
+        </mat-option>
+        <mat-option value="Fruits et Legumes">
+          Fruits et Legumes
+        </mat-option>
+        <mat-option value="Cremerie">
+          Cremerie
+        </mat-option>
+        <mat-option value="Epicerie">
+          Epicerie
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  class='form'>
+      <mat-label>Allergène ?</mat-label>
+      <mat-select [formControl]="allergen" required>
+        <mat-option value="Oui">
+          Oui
+        </mat-option>
+        <mat-option value="Non">
+          Non
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class='form' *ngIf="checkAllergen()">
+      <mat-label>Catégorie d'allergène</mat-label>
+      <input matInput [formControl]="allCat" placeholder="Ex. Crustacés" required>
+    </mat-form-field>
+  </form>
+</div>
+
+<div *ngIf='isClicked' class="confirmButtons">
+  <button (click)="validateIng()" mat-raised-button color="primary" [disabled]="checkIsFill()" style="margin-right: 1%;">Ajouter</button>
+  <button (click)="cancel()" mat-raised-button color="basic">Annuler</button>
+</div>
