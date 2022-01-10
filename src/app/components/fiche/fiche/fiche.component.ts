@@ -106,7 +106,7 @@ export class FicheComponent {
         this.resetInputs()
         this.listStages = []
 
-        this.router.navigate(['../accueil/download'], { queryParams: { meal: JSON.stringify(this.meal) } });
+        this.router.navigate(['../download'], { queryParams: { meal: JSON.stringify(this.meal) } });
       }
     });  
   }

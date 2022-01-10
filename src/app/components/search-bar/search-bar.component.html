@@ -39,6 +39,7 @@
             <button mat-menu-item routerLinkActive="active" [queryParams]="{meal: helperPassData(actualMeal)}" routerLink="etiquette">Etiquettes</button>
             <button mat-menu-item (click)="changeCouv(actualMeal)">Modifier le nombre de couverts</button>
             <button mat-menu-item (click)="declaVente(actualMeal)">Déclarer une vente</button>
+            <button [disabled]="actualMeal.name == 'Salade' || actualMeal.name == 'Boeuf bourgignon' || actualMeal.name == 'Gaufres'" mat-menu-item (click)="deleteMeal(actualMeal)">Supprimer</button>
           </mat-menu>
         </td>
       </ng-container>

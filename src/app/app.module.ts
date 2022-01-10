@@ -50,6 +50,7 @@ import { ChangeCouvComponent } from './dialogs/change-couv/change-couv.component
 import { VenteComponent } from './dialogs/vente/vente.component';
 import { NewIngredientComponent } from './dialogs/new-ingredient/new-ingredient.component';
 import { DeleteIngredientComponent } from './dialogs/delete-ingredient/delete-ingredient.component';
+import { MealDeleteComponent } from './dialogs/meal-delete/meal-delete.component';
 registerLocaleData(localeFr);
 
 const appRoutes: Routes = [
@@ -87,7 +88,7 @@ const appRoutes: Routes = [
      FicheComponent,FichePDFComponent, StageDeleteComponent,
      IngredientFormComponent, CarouselComponent, NavbarComponent, ParamComponent, SettingsComponent, 
      StockComponent, HomepageComponent, CategoryListComponent, 
-     InputIngredientComponent, ConfirmVenteComponent, EtiquettePdfComponent,  ConfirmMealComponent, ChangeCouvComponent, VenteComponent, NewIngredientComponent, DeleteIngredientComponent],
+     InputIngredientComponent, ConfirmVenteComponent, EtiquettePdfComponent,  ConfirmMealComponent, ChangeCouvComponent, VenteComponent, NewIngredientComponent, DeleteIngredientComponent, MealDeleteComponent],
   exports: [AppComponent, SearchBarComponent, FicheComponent, MatDialogModule, MatTabsModule ],
   bootstrap: [AppComponent],
   entryComponents: [IngredientFormComponent],

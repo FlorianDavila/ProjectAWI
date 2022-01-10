@@ -34,6 +34,18 @@ export class MealService {
     this.mealsCollection.doc(meal.id).set(Object.assign({}, meal));
   }
 
+  deleteMeal(meal: Meal) {
+    this.projetawiStore.doc<Meal>(this.path+meal.id).delete();
+  }
+
+  getMealByName(name : String) : Observable<Meal[]>{
+    var ing = this.db.collection(this.path, ref => ref.where("name", "==", name));
+    return ing
+    .valueChanges({ idField: "id" }).pipe(
+    map(data => data.map(doc => this.jsonToMeal(doc))) 
+    );
+  }
+
   jsonToMeal(json: any) : Meal { 
     return new Meal( 
       json.id,

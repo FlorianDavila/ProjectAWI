@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';  
 import { ChangeCouvComponent } from 'src/app/dialogs/change-couv/change-couv.component';
+import { MealDeleteComponent } from 'src/app/dialogs/meal-delete/meal-delete.component';
 import { VenteComponent } from 'src/app/dialogs/vente/vente.component';
 import { Meal } from 'src/app/models/Meal';
 import { DownloadService } from 'src/app/services/download.service';
@@ -88,5 +89,15 @@ export class SearchBarComponent implements OnInit {
 
   helperPassData(meal: Meal) : string {
     return JSON.stringify(meal);
+  }
+
+  deleteMeal(meal: Meal) { 
+    const dialogRef = this.dialog.open(MealDeleteComponent); 
+    dialogRef.afterClosed().subscribe(result => {
+      var userResponse = result ? JSON.parse(result) : false;
+      if (userResponse) {
+        this.mealService.deleteMeal(meal);
+      }
+    });  
   }
 } 
