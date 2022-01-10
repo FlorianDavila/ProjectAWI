@@ -29,8 +29,8 @@ export class CarouselComponent {
 
   ngOnInit() {
     this.mealService.getMealByName("Salade").subscribe(data => {
-      this.meals.push(data[0]);
-      this.images['assets/dessert.jpg'] = this.meals[0];
+      this.meals.push(data[0]); 
+      this.images['assets/entree.jpg'] = this.meals[0];
     }); 
     this.mealService.getMealByName("Boeuf bourgignon").subscribe(data => {
       this.meals.push(data[0]);
